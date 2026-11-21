@@ -1,0 +1,1 @@
+// checks the percentage of player inside the outline
