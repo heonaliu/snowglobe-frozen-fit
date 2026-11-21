@@ -39,7 +39,7 @@ export default function CameraFeed() {
     return (
         <div>
             {error ? <p>Unable to access the camera.</p> : null}
-            <video ref={videoRef} autoPlay playsInline muted style={{ width: "640px", height: "480px" }} />
+            <video ref={videoRef} autoPlay playsInline muted style={{ width: "940px", height: "540px" }} />
         </div>
     )
 }
