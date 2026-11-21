@@ -1,12 +1,12 @@
 // list of outline shapes the players has to fit into. 
 export const outlines = [
-  { id: "1",   name: "Pattern 1",   src: "/outlines/pattern1.png" },
-  { id: "2",      name: "Pattern 2", src: "/outlines/pattern2.png" },
-  { id: "3",     name: "Pattern 3",     src: "/outlines/pattern3.png" },
-  { id: "4", name: "Pattern 4", src: "/outlines/pattern4.png" },
-    { id: "5",      name: "Pattern 5", src: "/outlines/pattern5.png" },
-  { id: "6",     name: "Pattern 6",     src: "/outlines/pattern6.png" },
-  { id: "7",     name: "Pattern 7",     src: "/outlines/pattern7.png" },
+  { id: "1",   name: "Pattern 1",   src: "/outlines/pattern1.png", fill: "/fills/fillpattern1.png" },
+  { id: "2",      name: "Pattern 2", src: "/outlines/pattern2.png", fill: "/fills/fillpattern2.png" },
+  { id: "3",     name: "Pattern 3",     src: "/outlines/pattern3.png", fill: "/fills/fillpattern3.png" },
+  { id: "4", name: "Pattern 4", src: "/outlines/pattern4.png", fill: "/fills/fillpattern4.png" },
+  { id: "5",      name: "Pattern 5", src: "/outlines/pattern5.png", fill: "/fills/fillpattern5.png" },
+  { id: "6",     name: "Pattern 6",     src: "/outlines/pattern6.png", fill: "/fills/fillpattern6.png" },
+  { id: "7",     name: "Pattern 7",     src: "/outlines/pattern7.png", fill: "/fills/fillpattern7.png" },
 ];
 
 export function pickRandomOutline(previous) {

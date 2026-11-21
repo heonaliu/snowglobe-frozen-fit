@@ -123,3 +123,12 @@
   display: block; /* removes a small gap under the image */
   max-width: 80vw; max-height: 70vh;
 }
+
+.outline-shade {
+  position: absolute; inset: 0;
+  background: rgba(29, 78, 137, .5);   /* the blue shading */
+  pointer-events: none;
+  /* layer 1 covers everything; layer 2 is the shape. "exclude" cuts the shape out */
+  mask: linear-gradient(#000 0 0), var(--fill) center / contain no-repeat;
+  mask-composite: exclude;
+}

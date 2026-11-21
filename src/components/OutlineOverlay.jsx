@@ -3,6 +3,8 @@
 export default function OutlineOverlay({ outline }) {
   if (!outline) return null
   return (
+  <>
+    <div className="outline-shade" style={{ "--fill": `url(${outline.fill})` }} />
     <img
       key={outline.id}
       className="outline-overlay"
@@ -10,5 +12,6 @@ export default function OutlineOverlay({ outline }) {
       alt={outline.name}
       draggable="false"
     />
+  </>
   )
 }
