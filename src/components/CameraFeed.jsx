@@ -1,23 +1,27 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 
-export default function CameraFeed() {
-    const videoRef = useRef(null)
+// Opens the webcam and fills its parent (the game screen) with the feed.
+// The parent owns `videoRef` so it can grab a snapshot from the video.
+export default function CameraFeed({ videoRef, onReady }) {
     const [error, setError] = useState(null)
-    
+
     useEffect(() => {
         let stream;
         let cancelled = false;
+        const video = videoRef.current
 
-        navigator.mediaDevices.getUserMedia({ video: true, audio: false}).then((s) => {
+        navigator.mediaDevices.getUserMedia({
+            video: { facingMode: "user", width: { ideal: 1920 }, height: { ideal: 1080 } },
+            audio: false,
+        }).then((s) => {
             if (cancelled) {
                 s.getTracks().forEach((t) => t.stop())
                 return
             }
             stream = s
-            if (videoRef.current) {
-                videoRef.current.srcObject = stream
+            if (video) {
+                video.srcObject = stream
             }
-            
         }).catch((err) => {
             console.error("Error accessing camera: ", err)
             if (!cancelled) {
@@ -30,16 +34,27 @@ export default function CameraFeed() {
             if (stream) {
                 stream.getTracks().forEach((track) => track.stop())
             }
-            if (videoRef.current) {
-                videoRef.current.srcObject = null
+            if (video) {
+                video.srcObject = null
             }
         }
-    }, [])
+    }, [videoRef])
 
     return (
-        <div>
-            {error ? <p>Unable to access the camera.</p> : null}
-            <video ref={videoRef} autoPlay playsInline muted style={{ width: "940px", height: "540px" }} />
-        </div>
+        <>
+            <video
+                ref={videoRef}
+                className="camera"
+                autoPlay
+                playsInline
+                muted
+                onLoadedMetadata={onReady}
+            />
+            {error ? (
+                <p className="camera-error">
+                    Unable to access the camera. Please allow camera access and refresh.
+                </p>
+            ) : null}
+        </>
     )
 }
