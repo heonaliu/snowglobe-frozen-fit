@@ -31,12 +31,12 @@ export const GamePage = () => {
     setSnapshot(canvas.toDataURL("image/png"));
   }, []);
 
-  const startRound = () => {
+  const startRound = useCallback(() => {
     setSnapshot(null);
     setOutline((prev) => pickRandomOutline(prev));
     setSeconds(ROUND_SECONDS);
     setRunning(true);
-  };
+  }, []);
 
   // countdown; snapshot when it hits 0
   useEffect(() => {
@@ -49,6 +49,12 @@ export const GamePage = () => {
     const id = setTimeout(() => setSeconds((s) => s - 1), 1000);
     return () => clearTimeout(id);
   }, [running, seconds, takeSnapshot]);
+
+  useEffect(() => {
+  if (!snapshot) return;
+  const id = setTimeout(startRound, 3000);
+  return () => clearTimeout(id);
+  }, [snapshot, startRound]);
 
   return (
     <div className="game">
@@ -73,7 +79,6 @@ export const GamePage = () => {
       {snapshot && (
         <div className="game-result">
           <img src={snapshot} alt="Your frozen pose" className="game-result-img" />
-          <button className="game-btn" onClick={startRound}>Play again</button>
         </div>
       )}
     </div>
