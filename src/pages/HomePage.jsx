@@ -26,7 +26,7 @@ const steps = [
   {
     title: '3. freeze!',
     tint: 'sky',
-    text: 'when the timer gets to 0, the camera will take a snapshot. the better you all fill the frame, the higher the score you'll get!',
+    text: 'when the timer gets to 0, the camera will take a snapshot. the better you all fill the frame, the higher the score you\'ll get!',
   },
 ]
 
@@ -65,7 +65,7 @@ export const HomePage = () => {
             <img src={titleImg} alt="Frozen Fit" className="home-title-img" draggable="false" />
           ) : (
             <span className="home-title-placeholder">
-              your title picture goes here<br />(src/assets/title.png)
+              title picture here<br />(src/assets/title.png)
             </span>
           )}
         </h1>
