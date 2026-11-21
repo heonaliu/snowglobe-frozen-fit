@@ -1,1 +1,0 @@
-// show status of the game like score, timer

@@ -1,1 +1,0 @@
-// controls web camera and returns video
