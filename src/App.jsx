@@ -9,7 +9,7 @@ const flakes = Array.from({ length: 100 }, () => ({
   left: Math.random() * 100,        // % across
   size: 10 + Math.random() * 20,    // px
   duration: 15 + Math.random() * 12, // seconds to fall
-  delay: -Math.random() * 24,        // negative = already mid-fall on load
+  delay: -Math.random() * 27,        // negative = already mid-fall on load
 }));
 
 function App() {
