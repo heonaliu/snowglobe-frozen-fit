@@ -47,6 +47,15 @@ body {
   box-sizing: border-box;
 }
 
+/* full-screen layer behind every page; z-index -1 puts it under all content, incl. the camera */
+.snow {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: -1;
+}
+
 .snowflake {
   position: absolute;
   top: -2rem;
