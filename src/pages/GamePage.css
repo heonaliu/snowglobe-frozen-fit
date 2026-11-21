@@ -113,8 +113,13 @@
   gap: 3vmin; padding: 4vmin;
   background: rgba(11, 42, 74, .78);
 }
-.game-result-img {
-  max-width: 80vw; max-height: 70vh;
+.game-result-frame {
+  position: relative; /* the outline sizes itself to this box */
   border: 1vmin solid #fff; border-radius: 2vmin;
   box-shadow: 0 10px 40px rgba(0,0,0,.5);
+  overflow: hidden;
+}
+.game-result-img {
+  display: block; /* removes a small gap under the image */
+  max-width: 80vw; max-height: 70vh;
 }

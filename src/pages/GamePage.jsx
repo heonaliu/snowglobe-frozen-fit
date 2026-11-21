@@ -78,7 +78,10 @@ export const GamePage = () => {
 
       {snapshot && (
         <div className="game-result">
-          <img src={snapshot} alt="Your frozen pose" className="game-result-img" />
+          <div className="game-result-frame">
+            <img src={snapshot} alt="Your frozen pose" className="game-result-img" />
+            <OutlineOverlay outline={outline} />
+          </div>
         </div>
       )}
     </div>
