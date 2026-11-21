@@ -1,7 +1,7 @@
 :root {
-  --text: #6b6375;
+  --text: #1255cd;
   --text-h: #08060d;
-  --bg: #fff;
+  --bg: #f5fbff;
   --border: #1E51AB;
   --code-bg: #f4f3ec;
   --accent: #C44731;
@@ -45,4 +45,28 @@ body {
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+}
+
+.snowflake {
+  position: absolute;
+  top: -2rem;
+  color: #9cc9ec;
+  animation: fall 15s linear infinite;
+  pointer-events: none;
+  user-select: none;
+}
+
+.home {
+  position: relative;
+  overflow: hidden;
+  min-height: 100svh;
+}
+
+@keyframes fall {
+  50% { transform: translate(20px, 50svh) rotate(180deg); }
+  100% { transform: translate(0, calc(100svh + 2rem)) rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .snowflake { display: none; }
 }
