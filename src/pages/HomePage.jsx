@@ -26,7 +26,7 @@ const steps = [
   {
     title: '3. freeze!',
     tint: 'sky',
-    text: 'When the timer hits zero we snap your picture. The better you fit, the more of the frozen penguin you thaw.',
+    text: 'When the timer hits zero we snap your picture. The better you fit, the higher your score!',
   },
 ]
 
