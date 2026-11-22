@@ -8,7 +8,7 @@ import "./SubmitScore.css";
 export default function SubmitScore({ score, maxScore }) {
   const [team, setTeam] = useState("");
   const [members, setMembers] = useState(["", ""]);
-  const [status, setStatus] = useState("idle");   // idle | saving | saved
+  const [status, setStatus] = useState("idle");   // idle | saving | saved | skipped
   const [error, setError] = useState("");
   const [saved, setSaved] = useState(null);       // { entry, rank } once saved
   const navigate = useFlurryNavigate();
@@ -33,6 +33,28 @@ export default function SubmitScore({ score, maxScore }) {
     }
   };
 
+  const toLeaderboard = (state) => (e) => {
+    e.preventDefault();
+    navigate("/leaderboard", { state });
+  };
+
+  // "No thanks": shrink to one line, with a way to the leaderboard (or back to the form)
+  if (status === "skipped") {
+    return (
+      <section className="results-form results-form-skipped">
+        <p className="results-form-text">no worries! maybe next time.</p>
+        <div className="results-form-buttons">
+          <Link to="/leaderboard" className="results-btn" onClick={toLeaderboard()}>
+            See leaderboard
+          </Link>
+          <button type="button" className="results-btn results-btn-quiet" onClick={() => setStatus("idle")}>
+            Save after all
+          </button>
+        </div>
+      </section>
+    );
+  }
+
   if (status === "saved") {
     return (
       <section className="results-form" aria-live="polite">
@@ -44,7 +66,7 @@ export default function SubmitScore({ score, maxScore }) {
           to="/leaderboard"
           state={{ highlightId: saved.entry.id }}
           className="results-btn"
-          onClick={(e) => { e.preventDefault(); navigate("/leaderboard", { state: { highlightId: saved.entry.id } }); }}
+          onClick={toLeaderboard({ highlightId: saved.entry.id })}
         >
           See leaderboard
         </Link>
@@ -106,9 +128,19 @@ export default function SubmitScore({ score, maxScore }) {
 
       {error && <p className="results-error" role="alert">{error}</p>}
 
-      <button className="results-btn" type="submit" disabled={status === "saving"}>
-        {status === "saving" ? "Saving…" : "Save to leaderboard"}
-      </button>
+      <div className="results-form-buttons">
+        <button className="results-btn" type="submit" disabled={status === "saving"}>
+          {status === "saving" ? "Saving…" : "Save"}
+        </button>
+        <button
+          type="button"
+          className="results-btn results-btn-quiet"
+          onClick={() => setStatus("skipped")}
+          disabled={status === "saving"}
+        >
+          No thanks
+        </button>
+      </div>
     </form>
   );
 }

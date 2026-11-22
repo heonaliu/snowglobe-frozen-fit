@@ -1,51 +1,70 @@
 /* Styles for the "save your score" form (lives inside .results, so it shares its colors) */
-/* ---------- Save-your-score form ---------- */
+/* ---------- Save-your-score form: kept compact so the round photos below still fit ---------- */
 .results-form {
-  width: min(100%, 460px);
+  flex: none;
+  width: min(100%, 520px);
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: 1.2dvh;
-  padding: 22px 20px 26px;
+  gap: 6px;
+  padding: 10px 16px 14px;
   border: 2px solid var(--navy);
-  border-radius: 16px;
-  box-shadow: 0 6px 0 var(--navy);
+  border-radius: 14px;
+  box-shadow: 0 4px 0 var(--navy);
   background: #fff;
   text-align: left;
 }
-.results-form-title { margin: 0; font-weight: 400; font-size: 1.7rem; text-align: center; }
-.results-form-text { margin: 0 0 6px; text-align: center; color: #5a5f9a; font-size: 1.1rem; }
-.results-form .results-btn { align-self: center; margin-top: 10px; }
+.results-form-title { margin: 0; font-weight: 400; font-size: 1.25rem; line-height: 1.1; text-align: center; }
+.results-form-text { margin: 0; text-align: center; color: #5a5f9a; font-size: .95rem; }
+
+/* Save / No thanks side by side; smaller pills than the page's main buttons */
+.results-form-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 4px;
+}
+.results-form .results-btn { font-size: clamp(1rem, 2.6vmin, 1.3rem); box-shadow: 0 4px 0 #1d4e89; }
+.results-form .results-btn:active { box-shadow: 0 1px 0 #1d4e89; }
 .results-form .results-btn:disabled { opacity: .6; cursor: wait; }
 
-.results-label { margin-top: 6px; font-size: 1rem; color: #3a4a7a; }
+/* after "No thanks": just one short line plus the buttons */
+.results-form-skipped { padding: 10px 16px 12px; }
+
+.results-label { font-size: .9rem; color: #3a4a7a; }
 .results-input {
   flex: 1;
   min-width: 0;
   box-sizing: border-box;
-  padding: 9px 12px;
+  padding: 5px 10px;
   border: 2px solid var(--navy);
-  border-radius: 10px;
+  border-radius: 8px;
   background: var(--cream);
   color: var(--navy);
   font: inherit;
-  font-size: 1.05rem;
+  font-size: .95rem;
 }
 .results-input:focus-visible { outline: 3px solid #bfe6ff; outline-offset: 1px; }
 
-.results-members { display: flex; flex-direction: column; gap: 8px; }
-.results-member { display: flex; gap: 8px; align-items: center; }
+/* members in two columns, so 7 names take 4 rows instead of 7 */
+.results-members { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+.results-member { display: flex; gap: 6px; align-items: center; }
+@media (max-width: 420px) {
+  .results-members { grid-template-columns: minmax(0, 1fr); }
+}
 
 .results-remove {
-  width: 36px;
-  height: 36px;
+  width: 26px;
+  height: 26px;
   flex: none;
+  padding: 0;
   border: 2px solid var(--navy);
   border-radius: 50%;
   background: #fff;
   color: var(--navy);
-  font-size: 1.3rem;
+  font-size: 1rem;
   line-height: 1;
   cursor: pointer;
 }
@@ -53,14 +72,15 @@
 
 .results-add {
   align-self: flex-start;
-  padding: 6px 14px;
+  padding: 3px 12px;
   border: 2px dashed var(--navy);
   border-radius: 999px;
   background: transparent;
   color: var(--navy);
   font: inherit;
+  font-size: .85rem;
   cursor: pointer;
 }
 .results-add:hover { background: #d9ecf7; }
 
-.results-error { margin: 0; color: #b3261e; text-align: center; }
+.results-error { margin: 0; color: #b3261e; text-align: center; font-size: .9rem; }
