@@ -1,0 +1,99 @@
+/* Leaderboard page: same cream background, navy text and card look as the home page */
+.board {
+  --navy: #1b2f6e;
+  --cream: #fbf9f4;
+  --pink: #ff8fb8;
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  overflow-y: auto;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.6dvh;
+  padding: 4dvh 16px 5dvh;
+  background: var(--cream);
+  color: var(--navy);
+  font-family: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+  text-align: center;
+}
+
+.board-title {
+  margin: 0;
+  font-family: 'Snow Kei', 'Trebuchet MS', sans-serif;
+  font-weight: 400;
+  font-size: clamp(2.2rem, 8vmin, 4.5rem);
+  line-height: 1;
+}
+.board-sub { margin: -1dvh 0 0; font-size: clamp(1rem, 2.6vmin, 1.4rem); color: #5a5f9a; }
+.board-message { margin: 3dvh 0; font-size: 1.3rem; color: #5a5f9a; }
+
+.board-list {
+  width: min(100%, 640px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.board-row {
+  --tint: #fff;
+  display: grid;
+  grid-template-columns: 2.6rem 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border: 2px solid var(--navy);
+  border-radius: 14px;
+  box-shadow: 0 4px 0 var(--navy);
+  background: linear-gradient(180deg, var(--tint) 0%, #fff 100%);
+  text-align: left;
+}
+.board-row-lavender { --tint: #e4dcf2; }
+.board-row-butter   { --tint: #f6ecd0; }
+.board-row-sky      { --tint: #d9ecf7; }
+.board-row-you { outline: 4px solid var(--pink); outline-offset: 3px; }   /* the team that just saved */
+
+.board-rank { font-size: 1.8rem; text-align: center; }
+.board-team { min-width: 0; display: flex; flex-direction: column; }
+.board-name {
+  font-size: 1.3rem;
+  overflow-wrap: anywhere;
+}
+.board-members {
+  font-size: .95rem;
+  color: #5a5f9a;
+  overflow-wrap: anywhere;
+}
+.board-score {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-size: 1.8rem;
+  line-height: 1.1;
+}
+.board-date { font-size: .8rem; color: #5a5f9a; }
+
+.board-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-top: 1dvh; }
+
+/* same pill button as the home page Start */
+.board-btn {
+  font-family: 'Snow Kei', 'Trebuchet MS', sans-serif;
+  font-size: clamp(1.2rem, 4vmin, 2rem);
+  padding: .35em 1.5em;
+  border: 3px solid #1d4e89;
+  border-radius: 999px;
+  background: var(--pink);
+  color: #fff;
+  box-shadow: 0 6px 0 #1d4e89;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform .1s, box-shadow .1s;
+}
+.board-btn:hover { transform: translateY(-2px); }
+.board-btn:active { transform: translateY(4px); box-shadow: 0 2px 0 #1d4e89; }
+.board-btn:focus-visible { outline: 3px solid var(--navy); outline-offset: 4px; }
+.board-btn-quiet { background: #fff; color: #1d4e89; }

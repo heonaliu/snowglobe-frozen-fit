@@ -6,6 +6,7 @@ import "./App.css";
 import { HomePage } from "./pages/HomePage";
 import { GamePage } from "./pages/GamePage";
 import { ResultsPage } from "./pages/ResultsPage";
+import { LeaderboardPage } from "./pages/LeaderboardPage";
 
 // snowflakes made once, outside the component, so flakes don't jump on re-render
 const flakes = Array.from({ length: 100 }, () => ({
@@ -66,6 +67,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/game" element={<GamePage />} />
           <Route path="/results" element={<ResultsPage />} />
+        <Route path="/leaderboard" element={<LeaderboardPage />} />
         </Routes>
       </FlurryContext>
     </>

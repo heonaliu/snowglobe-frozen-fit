@@ -3,6 +3,7 @@ import { useFlurryNavigate } from "../components/Flurry";
 import OutlineOverlay from "../components/OutlineOverlay";
 import "./GamePage.css";
 import "./ResultsPage.css";
+import SubmitScore from "../components/SubmitScore";
 import { scoreImgs } from "../assets";
 
 // highest band first; the first one the score reaches wins
@@ -36,6 +37,7 @@ export const ResultsPage = () => {
     <div className="results">
       <h1 className="results-title">results</h1>
       <p className="results-total">{total} / {rounds.length * 10}</p>
+      <SubmitScore score={total} maxScore={rounds.length * 10} />
 
       <section className="results-rounds">
         {rounds.map((r, i) => (
@@ -56,6 +58,8 @@ export const ResultsPage = () => {
 
       <div className="results-actions">
         <button className="results-btn" onClick={() => navigate("/game")}>Play again</button>
+        <Link to="/" className="results-btn results-btn-quiet">Home</Link>
+        <Link to="/leaderboard" className="results-btn results-btn-quiet">Leaderboard</Link>
         <Link to="/" className="results-btn results-btn-quiet" onClick={flurryLink}>Home</Link>
       </div>
     </div>
