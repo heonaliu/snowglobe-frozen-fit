@@ -4,15 +4,8 @@ import OutlineOverlay from "../components/OutlineOverlay";
 import "./GamePage.css";
 import "./ResultsPage.css";
 import SubmitScore from "../components/SubmitScore";
-import { scoreImgs } from "../assets";
-
-// highest band first; the first one the score reaches wins
-const scoreImg = (score) =>
-  score === 10 ? scoreImgs.perfect :
-  score >= 7  ? scoreImgs.high :
-  score >= 4  ? scoreImgs.mid :
-                scoreImgs.low;
-
+import { scoreImg } from "../assets";
+import SixSeven, { isSixSeven } from "../components/SixSeven";
 
 export const ResultsPage = () => {
   const navigate = useFlurryNavigate();
@@ -55,6 +48,8 @@ export const ResultsPage = () => {
           </article>
         ))}
       </section>
+      {/* easter egg: any round that scored 7 right after a 6. Waits for the cubes to pop first */}
+      {rounds.some((r, i) => isSixSeven(rounds[i - 1]?.score, r.score)) && <SixSeven delay={0.9} />}
 
       <div className="results-actions">
         <button className="results-btn" onClick={() => navigate("/game")}>Play again</button>

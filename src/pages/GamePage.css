@@ -192,3 +192,31 @@
   filter: url(#goo);
   opacity: .6;
 }
+
+/* cube picture under the round's score while you're playing */
+.game-score-img {
+  display: block;
+  height: clamp(80px, 18vmin, 180px);
+  width: auto;
+  margin: 1vmin auto 0;
+  object-fit: contain;
+}
+
+/* cube pops up: grows from nothing, overshoots a little, settles */
+@keyframes cube-pop {
+  0%   { scale: 0; rotate: -12deg; opacity: 0; }
+  60%  { scale: 1.15; rotate: 4deg; opacity: 1; }
+  80%  { scale: .95; rotate: -2deg; }
+  100% { scale: 1; rotate: 0deg; }
+}
+.game-score-img,
+.results-score-img {
+  animation: cube-pop .6s cubic-bezier(.3, 1.4, .5, 1) both;
+}
+/* results page: the three cubes pop one after another */
+.results-card:nth-child(2) .results-score-img { animation-delay: .15s; }
+.results-card:nth-child(3) .results-score-img { animation-delay: .3s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .game-score-img, .results-score-img { animation: none; }
+}
