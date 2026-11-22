@@ -27,4 +27,9 @@ Frozen Fit runs entirely in the browser, with the camera/body/scoring all client
 - Styling is done with plain CSS.
 - The camera is opened with `getuserMedia` API (it just needs `https` or `localhost`).
 
-All of the (absolutely incredible) art is made by Heona! 
+All of the (absolutely incredible) art is made by Heona!
+
+## Teamwork
+- Varvara worked on the body detection mechanism with computer vision
+- Heona worked on all the assets and hooking the leaderboard with firebase firestore
+- Shelley worked on the landing page layout and leaderboard
