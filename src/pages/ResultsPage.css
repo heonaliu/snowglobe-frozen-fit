@@ -1,0 +1,77 @@
+/* Results page: same cream background, navy text and card look as the home page */
+.results {
+  --navy: #1b2f6e;
+  --cream: #fbf9f4;
+  --pink: #ff8fb8;
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  overflow-y: auto;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3dvh;
+  padding: 4dvh 16px;
+  background: var(--cream);
+  color: var(--navy);
+  font-family: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+  text-align: center;
+}
+
+.results-title {
+  margin: 0;
+  font-family: 'Snow Kei', 'Trebuchet MS', sans-serif;
+  font-weight: 400;
+  font-size: clamp(2.2rem, 8vmin, 4.5rem);
+  line-height: 1;
+}
+
+.results-total {
+  margin: 0;
+  font-size: clamp(1.6rem, 5vmin, 3rem);
+}
+
+.results-rounds {
+  width: min(100%, 1100px);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2vw;
+}
+
+/* each round reuses the .game-score card, with the photo inside it */
+.results-card {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2vmin;
+}
+.results-frame { width: 100%; box-shadow: none; }
+.results-img { width: 100%; max-width: none; max-height: none; }
+
+.results-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+}
+
+/* same pill button as the home page Start */
+.results-btn {
+  font-family: 'Snow Kei', 'Trebuchet MS', sans-serif;
+  font-size: clamp(1.2rem, 4vmin, 2rem);
+  padding: .35em 1.5em;
+  border: 3px solid #1d4e89;
+  border-radius: 999px;
+  background: var(--pink);
+  color: #fff;
+  box-shadow: 0 6px 0 #1d4e89;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform .1s, box-shadow .1s;
+}
+.results-btn:hover { transform: translateY(-2px); }
+.results-btn:active { transform: translateY(4px); box-shadow: 0 2px 0 #1d4e89; }
+.results-btn:focus-visible { outline: 3px solid var(--navy); outline-offset: 4px; }
+.results-btn-quiet { background: #fff; color: #1d4e89; }
