@@ -115,9 +115,16 @@ export const GamePage = () => {
       {!cameraReady && <p className="game-hint">Opening camera…</p>}
 
       {cameraReady && !running && !snapshot && (
-        <button className="game-btn game-btn-bottom" onClick={startRound}>
-          Start!
-        </button>
+        <>
+          {/* floor line, scaled like the shape outlines so it lines up with them */}
+          <img src="/cubes/standhere.png" alt="" className="game-standhere" draggable="false" />
+          <p className="game-setup-hint">
+            Stand against a blank background, at a distance from the screen so that your feet are on the line.
+          </p>
+          <button className="game-btn game-btn-bottom" onClick={startRound}>
+            Start!
+          </button>
+        </>
       )}
 
       {snapshot && (
