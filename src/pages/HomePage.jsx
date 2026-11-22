@@ -65,9 +65,7 @@ export const HomePage = () => {
           )}
         </h1>
 
-        <button className="home-btn" onClick={() => go('/game')}>Start</button>
-
-        <h2 className="home-heading">how do you play?</h2>
+        <h2 className="home-heading">How do you play?</h2>
 
         <section className="home-cards">
           {steps.map((step, i) => (
@@ -86,6 +84,8 @@ export const HomePage = () => {
             </article>
           ))}
         </section>
+
+        <button className="home-btn" onClick={() => go('/game')}>Start</button>
 
         
       </main>

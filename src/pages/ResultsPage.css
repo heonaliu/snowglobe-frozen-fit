@@ -66,6 +66,10 @@
 
 /* same pill button as the home page Start */
 .results-btn {
+  display: inline-flex;      /* the Home <a> doesn't center its text like a <button> does */
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
   font-family: 'Snow Kei', 'Trebuchet MS', sans-serif;
   font-size: clamp(1.2rem, 4vmin, 2rem);
   padding: .35em 1.5em;

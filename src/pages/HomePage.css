@@ -49,7 +49,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 3.2dvh;
+  gap: 2.4dvh;
   padding: 3.6dvh 2.5vw; /* equal top/bottom, so centering leaves the same space above the title and below the cards */
   max-width: 1280px;
   margin: 0 auto;
@@ -59,7 +59,7 @@
 .home-title {
   flex: 0 0 auto;
   margin: 0;
-  height: clamp(96px, 27dvh, 312px); /* image is cropped to the drawing, so this is the visible size */
+  height: clamp(110px, 36dvh, 480px); /* image is cropped to the drawing, so this is the visible size */
   max-width: 95vw;
   display: flex;
   justify-content: center;
@@ -95,7 +95,7 @@
   flex: 0 0 auto;
   /* half the screen width (never too tiny), but capped by the height so the
      square cards still fit on a short window without scrolling */
-  width: min(100%, max(50vw, 540px), 130dvh);
+  width: min(100%, max(60vw, 540px), 105dvh);
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   align-items: start;
@@ -180,8 +180,8 @@
 .home-btn {
   flex: 0 0 auto;
   font-family: 'Snow Kei', 'Trebuchet MS', sans-serif;
-  font-size: max(1rem, min(4.4dvh, 5vw));
-  padding: .35em 1.5em;
+  font-size: max(.9rem, min(3.4dvh, 4vw));
+  padding: .3em 1.4em;
   border: 3px solid #1d4e89;
   border-radius: 999px;
   background: var(--pink);
