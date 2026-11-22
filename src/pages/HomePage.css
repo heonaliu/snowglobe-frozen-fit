@@ -193,6 +193,8 @@
 .home-btn:hover { transform: translateY(-2px); }
 .home-btn:active { transform: translateY(4px); box-shadow: 0 2px 0 #1d4e89; }
 .home-btn:focus-visible { outline: 3px solid var(--navy); outline-offset: 4px; }
+.home-actions { flex: 0 0 auto; display: flex; flex-wrap: wrap; justify-content: center; gap: 2.4vw; }
+.home-btn-quiet { background: #fff; color: #1d4e89; text-decoration: none; }
 
 @media (prefers-reduced-motion: reduce) {
   .home .corner-snowflake { animation: none; }

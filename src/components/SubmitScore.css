@@ -1,0 +1,66 @@
+/* Styles for the "save your score" form (lives inside .results, so it shares its colors) */
+/* ---------- Save-your-score form ---------- */
+.results-form {
+  width: min(100%, 460px);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1.2dvh;
+  padding: 22px 20px 26px;
+  border: 2px solid var(--navy);
+  border-radius: 16px;
+  box-shadow: 0 6px 0 var(--navy);
+  background: #fff;
+  text-align: left;
+}
+.results-form-title { margin: 0; font-weight: 400; font-size: 1.7rem; text-align: center; }
+.results-form-text { margin: 0 0 6px; text-align: center; color: #5a5f9a; font-size: 1.1rem; }
+.results-form .results-btn { align-self: center; margin-top: 10px; }
+.results-form .results-btn:disabled { opacity: .6; cursor: wait; }
+
+.results-label { margin-top: 6px; font-size: 1rem; color: #3a4a7a; }
+.results-input {
+  flex: 1;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 9px 12px;
+  border: 2px solid var(--navy);
+  border-radius: 10px;
+  background: var(--cream);
+  color: var(--navy);
+  font: inherit;
+  font-size: 1.05rem;
+}
+.results-input:focus-visible { outline: 3px solid #bfe6ff; outline-offset: 1px; }
+
+.results-members { display: flex; flex-direction: column; gap: 8px; }
+.results-member { display: flex; gap: 8px; align-items: center; }
+
+.results-remove {
+  width: 36px;
+  height: 36px;
+  flex: none;
+  border: 2px solid var(--navy);
+  border-radius: 50%;
+  background: #fff;
+  color: var(--navy);
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.results-remove:hover { background: #f6ecd0; }
+
+.results-add {
+  align-self: flex-start;
+  padding: 6px 14px;
+  border: 2px dashed var(--navy);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--navy);
+  font: inherit;
+  cursor: pointer;
+}
+.results-add:hover { background: #d9ecf7; }
+
+.results-error { margin: 0; color: #b3261e; text-align: center; }

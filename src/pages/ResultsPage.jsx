@@ -2,6 +2,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import OutlineOverlay from "../components/OutlineOverlay";
 import "./GamePage.css";
 import "./ResultsPage.css";
+import SubmitScore from "../components/SubmitScore";
 
 export const ResultsPage = () => {
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ export const ResultsPage = () => {
     <div className="results">
       <h1 className="results-title">results</h1>
       <p className="results-total">{total} / {rounds.length * 10}</p>
+      <SubmitScore score={total} maxScore={rounds.length * 10} />
 
       <section className="results-rounds">
         {rounds.map((r, i) => (
@@ -41,6 +43,7 @@ export const ResultsPage = () => {
       <div className="results-actions">
         <button className="results-btn" onClick={() => navigate("/game")}>Play again</button>
         <Link to="/" className="results-btn results-btn-quiet">Home</Link>
+        <Link to="/leaderboard" className="results-btn results-btn-quiet">Leaderboard</Link>
       </div>
     </div>
   );
