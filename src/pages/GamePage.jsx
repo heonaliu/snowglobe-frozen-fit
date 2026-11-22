@@ -23,14 +23,6 @@ export const GamePage = () => {
   useEffect(() => { loadSegmenter() }, [])
 
   const takeSnapshot = useCallback(() => {
-    Promise.all([
-      getPersonMask(canvas),
-      getOutlineMask(outline.fill, canvas.width, canvas.height),
-    ]).then(([personMask, outlineMask]) => {
-    const result = checkFit(personMask, outlineMask)
-    console.log("score:", result.score, "fit:", result.fit.toFixed(2), result)
-    })
-
     const video = videoRef.current;
     if (!video || !video.videoWidth) return;
     const canvas = document.createElement("canvas");
@@ -41,13 +33,14 @@ export const GamePage = () => {
     ctx.translate(canvas.width, 0);
     ctx.scale(-1, 1);
     ctx.drawImage(video, 0, 0);
-    getPersonMask(canvas).then((mask) => {
-      const count = mask.reduce((a, b) => a + b, 0)
-      console.log("person pixels:", count, "of", mask.length)
-    })
-    getOutlineMask(outline.fill, canvas.width, canvas.height).then((mask) => {
-      const count = mask.reduce((a, b) => a + b, 0)
-      console.log("outline pixels:", count, "of", mask.length)
+
+    // score the frame (runs after the photo is on the canvas)
+    Promise.all([
+      getPersonMask(canvas),
+      getOutlineMask(outline.fill, canvas.width, canvas.height),
+    ]).then(([personMask, outlineMask]) => {
+      const result = checkFit(personMask, outlineMask)
+      console.log("score:", result.score, "fit:", result.fit.toFixed(2), result)
     })
 
     setSnapshot(canvas.toDataURL("image/png"));

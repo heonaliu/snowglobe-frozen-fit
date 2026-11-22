@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
 
-export default function CameraFeed() {
-    const videoRef = useRef(null)
-    const canvasRef = useRef(null)
+// Opens the webcam and fills its parent (the game screen) with the feed.
+// The parent owns `videoRef` so it can grab a snapshot from the video.
+export default function CameraFeed({ videoRef, onReady }) {
     const [error, setError] = useState(null)
 
     useEffect(() => {
@@ -40,30 +40,21 @@ export default function CameraFeed() {
         }
     }, [videoRef])
 
-    const takeSnapshot = () => {
-        const video = videoRef.current 
-        if (!video.videoWidth) return 
-        const canvas = canvasRef.current 
-
-        canvas.width = video.videoWidth
-        canvas.height = video.videoHeight
-        const ctx = canvas.getContext("2d", { willReadFrequently: true })
-        ctx.drawImage(video, 0, 0)
-        const data = ctx.getImageData(0, 0, canvas.width, canvas.height)
-        console.log(data)
-    }
-
-    useEffect(() => {
-        const id = setInterval(takeSnapshot, 3 * 1000)
-        return () => clearInterval(id)
-    }, [])
-
     return (
-        <div>
-            {error ? <p>Unable to access the camera. Please allow access and refresh.</p> : null}
-            <video ref={videoRef} autoPlay playsInline muted style={{ width: "940px", height: "540px" }} />
-            <canvas ref={canvasRef} style={{ display: "none"}} />
-        </div>
+        <>
+            <video
+                ref={videoRef}
+                className="camera"
+                autoPlay
+                playsInline
+                muted
+                onLoadedMetadata={onReady}
+            />
+            {error ? (
+                <p className="camera-error">
+                    Unable to access the camera. Please allow camera access and refresh.
+                </p>
+            ) : null}
+        </>
     )
 }
-
