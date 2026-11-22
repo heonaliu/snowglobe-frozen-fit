@@ -6,7 +6,7 @@ import { checkFit, drawColorMap } from "../game/checkFit"
 // the model works at 256x256 internally, so a bigger frame only costs time
 const W = 256
 // pause between live frames so the video and countdown stay smooth (~8 updates/sec max)
-const GAP_MS = 120
+const GAP_MS = 50
 
 // Live green/red over the moving camera while the countdown runs.
 // Works on a small mirrored copy of the video, shown with object-fit: cover like .camera.

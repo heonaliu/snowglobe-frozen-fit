@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CameraFeed from "../components/CameraFeed";
 import OutlineOverlay from "../components/OutlineOverlay";
 import LiveFit from "../components/LiveFit";
@@ -11,6 +11,7 @@ import { loadSegmenter, getPersonMask } from "../hooks/useBodySegmentation"
 import { checkFit, colorMapToImage } from "../game/checkFit";
 
 const ROUND_SECONDS = 7;
+const TOTAL_ROUNDS = 3;
 
 
 export const GamePage = () => {
@@ -22,6 +23,9 @@ export const GamePage = () => {
   const [snapshot, setSnapshot] = useState(null);
   const [score, setScore] = useState(null);
   const [fitMap, setFitMap] = useState(null);
+  const [round, setRound] = useState(0);          // 1, 2, 3 once playing
+  const [results, setResults] = useState([]);     // one entry per finished round
+  const navigate = useNavigate();
 
   useEffect(() => { loadSegmenter() }, [])
 
@@ -43,12 +47,15 @@ export const GamePage = () => {
       getOutlineMask(outline.fill, canvas.width, canvas.height),
     ]).then(([personMask, outlineMask]) => {
       const result = checkFit(personMask, outlineMask)
-      console.log("score:", result.score, "fit:", result.fit.toFixed(2), result)
+      const map = colorMapToImage(result.colorMap, canvas.width, canvas.height)
       setScore(result.score)
-      setFitMap(colorMapToImage(result.colorMap, canvas.width, canvas.height))
+      setFitMap(map)
+      setResults((prev) => [...prev, { photo, fitMap: map, outline, score: result.score }])
     })
 
-    setSnapshot(canvas.toDataURL("image/png"));
+    // jpeg keeps the 3 photos small enough to hand to the results page
+    const photo = canvas.toDataURL("image/jpeg", 0.85);
+    setSnapshot(photo);
   }, [outline]);
 
   const startRound = useCallback(() => {
@@ -56,6 +63,7 @@ export const GamePage = () => {
     setScore(null);
     setFitMap(null);
     setOutline((prev) => pickRandomOutline(prev));
+    setRound((r) => r + 1);
     setSeconds(ROUND_SECONDS);
     setRunning(true);
   }, []);
@@ -78,21 +86,18 @@ export const GamePage = () => {
     }
   }, [running, seconds, takeSnapshot]);
 
+  // show the scored snapshot for 3s, then next round, or the results page after the last one
   useEffect(() => {
-  if (!snapshot) return;
-  const id = setTimeout(startRound, 3000);
-  return () => clearTimeout(id);
-  }, [snapshot, startRound]);
+    if (!snapshot || score === null) return;
+    const id = setTimeout(() => {
+      if (round < TOTAL_ROUNDS) startRound();
+      else navigate("/results", { state: { rounds: results } });
+    }, 3000);
+    return () => clearTimeout(id);
+  }, [snapshot, score, round, results, startRound, navigate]);
 
   return (
     <div className="game">
-      {/* "goo" filter: blur, then snap the edge back to sharp, so blocky masks become smooth blobs */}
-      <svg width="0" height="0" style={{ position: "absolute" }} aria-hidden="true">
-        <filter id="goo" colorInterpolationFilters="sRGB">
-          <feGaussianBlur stdDeviation="8" />
-          <feColorMatrix values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -9" />
-        </filter>
-      </svg>
       <CameraFeed videoRef={videoRef} onReady={() => setCameraReady(true)} />
       <div className="game-tint" />
 
@@ -120,7 +125,7 @@ export const GamePage = () => {
             {fitMap && <img src={fitMap} alt="" className="fit-map" />}
           </div>
           <div className="game-score">
-            <h3 className="game-score-title">your score</h3>
+            <h3 className="game-score-title">round {round} of {TOTAL_ROUNDS}</h3>
             <p className="game-score-number">{score === null ? "…" : `${score} / 10`}</p>
           </div>
         </div>
