@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { fetchLeaderboard } from "../game/leaderboard";
+import { useFlurryNavigate } from "../components/Flurry";
 import "./LeaderboardPage.css";
 
 const TINTS = ["lavender", "butter", "sky"];   // top three get the card colors from the home page
@@ -11,6 +12,9 @@ const formatDate = (ms) =>
 export const LeaderboardPage = () => {
   // the results page passes the id of the team that just saved, so we can highlight it
   const highlightId = useLocation().state?.highlightId;
+  const navigate = useFlurryNavigate();
+  // keep <Link> (right-click / new tab still work), but route the click through the flurry
+  const flurryLink = (e) => { e.preventDefault(); navigate(e.currentTarget.getAttribute("href")); };
   const [entries, setEntries] = useState(null);   // null = still loading
   const [error, setError] = useState("");
 
@@ -61,8 +65,8 @@ export const LeaderboardPage = () => {
       )}
 
       <div className="board-actions">
-        <Link to="/game" className="board-btn">Play</Link>
-        <Link to="/" className="board-btn board-btn-quiet">Home</Link>
+        <Link to="/game" className="board-btn" onClick={flurryLink}>Play</Link>
+        <Link to="/" className="board-btn board-btn-quiet" onClick={flurryLink}>Home</Link>
       </div>
     </div>
   );

@@ -24,8 +24,8 @@ export const titleImg = pick('title')   // title picture at the top
 export const cardImgs = [pick('card1'), pick('card2'), pick('card3')]  // one per card
 
 export const scoreImgs = {
-  low: '/cubes/melty.png', // 0 - 3  (files in public/ are linked by path, not pick())
-  mid: pick('score-mid'), // 4 - 6
-  high: pick('score-high'),   // 7–9
-  perfect: pick('score-perfect'), // 10
+  low: '/cubes/melty.png', // 0 - 2  (files in public/ are linked by path, not pick())
+  mid: '/cubes/pray.png', // 3 - 5
+  high: '/cubes/thumbsup.png',   // 6–7
+  perfect: '/cubes/chefskiss.png', // 8 - 10
 }
