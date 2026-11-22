@@ -141,18 +141,23 @@
   color: var(--navy);
 }
 
-/* the art takes the leftover space and the picture shrinks to fit it */
+/* the art takes the leftover space and the picture shrinks to fit inside it */
 .home-card-art {
-  flex: 1 1 0;       /* take the height that's left */
+  position: relative;
+  flex: 1 1 0;
   min-height: 0;
-  width: min(100%, max(50vw, 540px));   /* half the screen width (never too tiny) */
-  display: grid;
-  place-items: center;
+  width: 100%;
 }
-.home-card-img { width: 100%; height: 100%; object-fit: contain; }
-.home-card-placeholder {
+.home-card-img {
+  position: absolute;   /* out of the flow, so a big picture can never push into the text */
+  inset: 0;
   width: 100%;
   height: 100%;
+  object-fit: contain;
+}
+.home-card-placeholder {
+  position: absolute;
+  inset: 0;
   box-sizing: border-box;
   display: grid;
   place-items: center;
