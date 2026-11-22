@@ -1,5 +1,7 @@
+import { Link, useNavigate } from 'react-router-dom'
 import Snowflake from '../components/Snowflake'
 import { useFlurryNavigate } from '../components/Flurry'
+
 import { titleImg, cardImgs } from '../assets'
 import './HomePage.css'
 
@@ -26,12 +28,17 @@ const steps = [
   {
     title: '3. freeze!',
     tint: 'sky',
-    text: 'When the timer hits zero we snap your picture. The better you fit, the higher your score!',
+    text: 'When the timer hits zero we snap your picture. The better you fit, the more of the frozen penguin you thaw.',
   },
 ]
 
 export const HomePage = () => {
-  const go = useFlurryNavigate();
+  const navigate = useNavigate();
+
+  const handleStart = () => {
+    navigate('/game');
+  };
+
   return (
     <div className="home">
       {/* background layer: stays put while the page scrolls */}
@@ -65,7 +72,11 @@ export const HomePage = () => {
           )}
         </h1>
 
-        <button className="home-btn" onClick={() => go('/game')}>Start</button>
+        <div className="home-actions">
+          <button className="home-btn" onClick={handleStart}>Start</button>
+          {/* <Link to="/leaderboard" className="home-btn home-btn-quiet" onClick={flurryLink}>Leaderboard</Link> */}
+        </div>
+
 
         <h2 className="home-heading">how do you play?</h2>
 

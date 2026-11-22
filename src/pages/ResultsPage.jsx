@@ -58,9 +58,8 @@ export const ResultsPage = () => {
 
       <div className="results-actions">
         <button className="results-btn" onClick={() => navigate("/game")}>Play again</button>
-        <Link to="/" className="results-btn results-btn-quiet">Home</Link>
-        <Link to="/leaderboard" className="results-btn results-btn-quiet">Leaderboard</Link>
         <Link to="/" className="results-btn results-btn-quiet" onClick={flurryLink}>Home</Link>
+        <Link to="/leaderboard" className="results-btn results-btn-quiet" onClick={flurryLink}>Leaderboard</Link>
       </div>
     </div>
     </main>
