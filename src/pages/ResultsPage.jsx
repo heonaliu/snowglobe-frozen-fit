@@ -4,15 +4,7 @@ import OutlineOverlay from "../components/OutlineOverlay";
 import "./GamePage.css";
 import "./ResultsPage.css";
 import SubmitScore from "../components/SubmitScore";
-import { scoreImgs } from "../assets";
-
-// highest band first; the first one the score reaches wins
-const scoreImg = (score) =>
-  score === 10 ? scoreImgs.perfect :
-  score >= 7  ? scoreImgs.high :
-  score >= 4  ? scoreImgs.mid :
-                scoreImgs.low;
-
+import { scoreImg } from "../assets";
 
 export const ResultsPage = () => {
   const navigate = useFlurryNavigate();

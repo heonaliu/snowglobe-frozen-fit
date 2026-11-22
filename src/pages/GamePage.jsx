@@ -10,6 +10,7 @@ import { pickRandomOutline, getOutlineMask } from "../game/outlines";
 import "./GamePage.css";
 import { loadSegmenter, getPersonMask } from "../hooks/useBodySegmentation"
 import { checkFit, colorMapToImage } from "../game/checkFit";
+import { scoreImg } from "../assets";
 
 const ROUND_SECONDS = 7;
 const TOTAL_ROUNDS = 3;
@@ -128,6 +129,9 @@ export const GamePage = () => {
           <div className="game-score">
             <h3 className="game-score-title">round {round} of {TOTAL_ROUNDS}</h3>
             <p className="game-score-number">{score === null ? "…" : `${score} / 10`}</p>
+            {score !== null && (
+              <img src={scoreImg(score)} alt="" className="game-score-img" draggable="false" />
+            )}
           </div>
         </div>
       )}
