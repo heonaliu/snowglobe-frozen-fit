@@ -89,6 +89,8 @@ export const HomePage = () => {
           <button className="home-btn" onClick={() => go('/game')}>Start</button>
           {/* <Link to="/leaderboard" className="home-btn home-btn-quiet" onClick={(e) => { e.preventDefault(); go('/leaderboard'); }}>Leaderboard</Link> */}
         </div>
+
+        <footer className="home-footer">made with ♥ by Varvara Karenski, Heona Liu, Shelley Ma</footer>
       </main>
     </div>
   )

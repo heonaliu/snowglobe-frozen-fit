@@ -221,3 +221,10 @@
   bottom: auto;
   transform: scaleY(-1);
 }
+.home-footer {
+  flex: 0 0 auto;
+  margin: 0;
+  font-size: max(.75rem, min(1.8dvh, 2.4vw));
+  color: var(--navy);
+  opacity: .85;
+}

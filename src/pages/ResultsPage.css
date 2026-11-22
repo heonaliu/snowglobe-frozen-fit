@@ -158,3 +158,9 @@
   filter: drop-shadow(0 3px 4px rgba(27, 47, 110, .35));
   pointer-events: none;
 }
+
+/* Background picture goes on the page itself (not on .results), so the app-wide
+   falling snow that sits behind .results stays visible on top of it */
+:root:has(.results) {
+  background: #fbf9f4 url('../assets/background.png') center / cover no-repeat fixed;
+}
