@@ -26,7 +26,7 @@ const steps = [
   {
     title: '3. freeze!',
     tint: 'sky',
-    text: 'When the timer hits zero we snap your picture. The better you fit, the higher your score!',
+    text: 'When the timer hits zero we snap your picture. The better you fit, the more of the frozen penguin you thaw.',
   },
 ]
 
@@ -85,9 +85,10 @@ export const HomePage = () => {
           ))}
         </section>
 
-        <button className="home-btn" onClick={() => go('/game')}>Start</button>
-
-        
+        <div className="home-actions">
+          <button className="home-btn" onClick={() => go('/game')}>Start</button>
+          {/* <Link to="/leaderboard" className="home-btn home-btn-quiet" onClick={(e) => { e.preventDefault(); go('/leaderboard'); }}>Leaderboard</Link> */}
+        </div>
       </main>
     </div>
   )

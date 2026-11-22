@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { submitScore, MAX_MEMBERS, MAX_NAME } from "../game/leaderboard";
+import { useFlurryNavigate } from "./Flurry";
 import "./SubmitScore.css";
 
 // "Save your score" form: a team name plus up to 7 team members.
@@ -10,6 +11,7 @@ export default function SubmitScore({ score, maxScore }) {
   const [status, setStatus] = useState("idle");   // idle | saving | saved
   const [error, setError] = useState("");
   const [saved, setSaved] = useState(null);       // { entry, rank } once saved
+  const navigate = useFlurryNavigate();
 
   const setMember = (i, value) =>
     setMembers((list) => list.map((m, j) => (j === i ? value : m)));
@@ -42,6 +44,7 @@ export default function SubmitScore({ score, maxScore }) {
           to="/leaderboard"
           state={{ highlightId: saved.entry.id }}
           className="results-btn"
+          onClick={(e) => { e.preventDefault(); navigate("/leaderboard", { state: { highlightId: saved.entry.id } }); }}
         >
           See leaderboard
         </Link>

@@ -17,7 +17,7 @@ const scoreImg = (score) =>
 export const ResultsPage = () => {
   const navigate = useFlurryNavigate();
   // keep <Link> (right-click / open in new tab still work), but route the click through the flurry
-  const flurryLink = (e) => { e.preventDefault(); navigate("/"); };
+  const flurryLink = (e) => { e.preventDefault(); navigate(e.currentTarget.getAttribute("href")); };  // goes to the link's own "to"
   // the game page hands the rounds over when it navigates here
   const rounds = useLocation().state?.rounds ?? [];
   const total = rounds.reduce((sum, r) => sum + r.score, 0);
@@ -58,9 +58,8 @@ export const ResultsPage = () => {
 
       <div className="results-actions">
         <button className="results-btn" onClick={() => navigate("/game")}>Play again</button>
-        <Link to="/" className="results-btn results-btn-quiet">Home</Link>
-        <Link to="/leaderboard" className="results-btn results-btn-quiet">Leaderboard</Link>
         <Link to="/" className="results-btn results-btn-quiet" onClick={flurryLink}>Home</Link>
+        <Link to="/leaderboard" className="results-btn results-btn-quiet" onClick={flurryLink}>Leaderboard</Link>
       </div>
     </div>
     </main>
