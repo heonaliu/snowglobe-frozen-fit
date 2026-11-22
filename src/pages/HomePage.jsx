@@ -72,7 +72,7 @@ export const HomePage = () => {
 
         <button className="home-btn" onClick={handleStart}>Start</button>
 
-        <h2 className="home-heading">How does this work?</h2>
+        <h2 className="home-heading">how do you play?</h2>
 
         <section className="home-cards">
           {steps.map((step, i) => (
