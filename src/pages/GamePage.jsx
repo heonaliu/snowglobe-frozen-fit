@@ -2,12 +2,13 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import CameraFeed from "../components/CameraFeed";
 import OutlineOverlay from "../components/OutlineOverlay";
+import LiveFit from "../components/LiveFit";
 import Status from "../components/Status";
 import Snowflake from "../components/Snowflake";
 import { pickRandomOutline, getOutlineMask } from "../game/outlines";
 import "./GamePage.css";
 import { loadSegmenter, getPersonMask } from "../hooks/useBodySegmentation"
-import { checkFit } from "../game/checkFit";
+import { checkFit, colorMapToImage } from "../game/checkFit";
 
 const ROUND_SECONDS = 7;
 
@@ -19,6 +20,8 @@ export const GamePage = () => {
   const [seconds, setSeconds] = useState(ROUND_SECONDS);
   const [outline, setOutline] = useState(null);
   const [snapshot, setSnapshot] = useState(null);
+  const [score, setScore] = useState(null);
+  const [fitMap, setFitMap] = useState(null);
 
   useEffect(() => { loadSegmenter() }, [])
 
@@ -41,6 +44,8 @@ export const GamePage = () => {
     ]).then(([personMask, outlineMask]) => {
       const result = checkFit(personMask, outlineMask)
       console.log("score:", result.score, "fit:", result.fit.toFixed(2), result)
+      setScore(result.score)
+      setFitMap(colorMapToImage(result.colorMap, canvas.width, canvas.height))
     })
 
     setSnapshot(canvas.toDataURL("image/png"));
@@ -48,21 +53,29 @@ export const GamePage = () => {
 
   const startRound = useCallback(() => {
     setSnapshot(null);
+    setScore(null);
+    setFitMap(null);
     setOutline((prev) => pickRandomOutline(prev));
     setSeconds(ROUND_SECONDS);
     setRunning(true);
   }, []);
 
-  // countdown; snapshot when it hits 0
+  // countdown from a fixed end time, so a busy page can't stretch the seconds
   useEffect(() => {
     if (!running) return;
-    if (seconds <= 0) {
+    const end = performance.now() + ROUND_SECONDS * 1000;
+    const id = setInterval(() => {
+      setSeconds(Math.max(0, Math.ceil((end - performance.now()) / 1000)));
+    }, 100);
+    return () => clearInterval(id);
+  }, [running]);
+
+  // snapshot when it hits 0
+  useEffect(() => {
+    if (running && seconds <= 0) {
       takeSnapshot();
       setRunning(false);
-      return;
     }
-    const id = setTimeout(() => setSeconds((s) => s - 1), 1000);
-    return () => clearTimeout(id);
   }, [running, seconds, takeSnapshot]);
 
   useEffect(() => {
@@ -73,10 +86,18 @@ export const GamePage = () => {
 
   return (
     <div className="game">
+      {/* "goo" filter: blur, then snap the edge back to sharp, so blocky masks become smooth blobs */}
+      <svg width="0" height="0" style={{ position: "absolute" }} aria-hidden="true">
+        <filter id="goo" colorInterpolationFilters="sRGB">
+          <feGaussianBlur stdDeviation="8" />
+          <feColorMatrix values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -9" />
+        </filter>
+      </svg>
       <CameraFeed videoRef={videoRef} onReady={() => setCameraReady(true)} />
       <div className="game-tint" />
 
       {running && <OutlineOverlay outline={outline} />}
+      {running && <LiveFit videoRef={videoRef} outline={outline} />}
 
       <Snowflake />
       <Status seconds={seconds} active={running} />
@@ -96,7 +117,11 @@ export const GamePage = () => {
           <div className="game-result-frame">
             <img src={snapshot} alt="Your frozen pose" className="game-result-img" />
             <OutlineOverlay outline={outline} />
+            {fitMap && <img src={fitMap} alt="" className="fit-map" />}
           </div>
+          <p className="game-score">
+            {score === null ? "Scoring…" : `Score: ${score} / 10`}
+          </p>
         </div>
       )}
     </div>

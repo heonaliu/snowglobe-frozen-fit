@@ -43,3 +43,27 @@ export function checkFit(personMask, outlineMask) {
   const score = Math.round(1 + fit * 9)                    // 0–1 → 1–10
   return { score, fit, inside, outside, gaps, colorMap }
 }
+
+// turns checkFit's colorMap into a see-through PNG to lay over the snapshot
+// 1 = #9AEAE3 mint (you, inside), 2 = #EA9AE3 pink (you, outside); gaps and background stay clear
+// [r, g, b, opacity 0–255]; solid here because the goo filter needs solid shapes,
+// the see-through look comes from `opacity` in GamePage.css
+const COLORS = { 1: [154, 234, 227, 255], 2: [234, 154, 227, 255] }
+
+// paints the colorMap onto a canvas the same size as the mask (used live and for the snapshot)
+export function drawColorMap(ctx, colorMap, width, height) {
+  const img = ctx.createImageData(width, height)   // starts fully transparent
+  for (let i = 0; i < colorMap.length; i++) {
+    const c = COLORS[colorMap[i]]
+    if (c) img.data.set(c, i * 4)
+  }
+  ctx.putImageData(img, 0, 0)
+}
+
+export function colorMapToImage(colorMap, width, height) {
+  const canvas = document.createElement("canvas")
+  canvas.width = width
+  canvas.height = height
+  drawColorMap(canvas.getContext("2d"), colorMap, width, height)
+  return canvas.toDataURL("image/png")
+}

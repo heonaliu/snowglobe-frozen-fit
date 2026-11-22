@@ -139,3 +139,29 @@
   pointer-events: none;
   mask: var(--fill) center / contain no-repeat;
 }
+
+.game-score {
+  margin: 0;
+  font-size: clamp(1.6rem, 6vmin, 3.6rem);
+  color: #fff;
+  text-shadow: 0 .5vmin 0 var(--deep);
+}
+
+/* green/red fit map, same pixel size as the snapshot so it lines up exactly */
+.fit-map {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  filter: url(#goo); /* smooth blob edges, see the <svg> in GamePage.jsx */
+  opacity: .6;
+}
+
+/* live green/red during the countdown; same fit as .camera so it lines up */
+.live-fit {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  filter: url(#goo);
+  opacity: .6;
+}

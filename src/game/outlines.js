@@ -16,8 +16,8 @@ export function pickRandomOutline(previous) {
 }
 
 // returns one value per pixel: 1 = inside the outline, 0 = outside
-// placed the same way the frame shows it: a centred square (object-fit: contain)
-export async function getOutlineMask(fillSrc, W, H) {
+// placed as a centred square of side `s` (default: fits the image, like object-fit: contain)
+export async function getOutlineMask(fillSrc, W, H, s = Math.min(W, H)) {
   const img = new Image()
   img.src = fillSrc
   await img.decode()                       // wait for the PNG to load
@@ -26,8 +26,7 @@ export async function getOutlineMask(fillSrc, W, H) {
   canvas.width = W
   canvas.height = H
   const ctx = canvas.getContext("2d")
-  const s = Math.min(W, H)
-  ctx.drawImage(img, (W - s) / 2, (H - s) / 2, s, s)   // ← your two lines
+  ctx.drawImage(img, (W - s) / 2, (H - s) / 2, s, s)
 
   const rgba = ctx.getImageData(0, 0, W, H).data       // 4 numbers per pixel: r, g, b, a
   const mask = new Uint8Array(W * H)

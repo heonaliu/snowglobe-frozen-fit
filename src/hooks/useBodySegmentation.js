@@ -12,6 +12,7 @@ export function loadSegmenter() {
         baseOptions: {
           modelAssetPath:
             "https://storage.googleapis.com/mediapipe-models/image_segmenter/selfie_multiclass_256x256/float32/latest/selfie_multiclass_256x256.tflite",
+          delegate: "GPU", // run the model on the graphics card, not the CPU
         },
         runningMode: "IMAGE",
         outputCategoryMask: true,
