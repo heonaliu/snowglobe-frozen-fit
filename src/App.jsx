@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import { HomePage } from "./pages/HomePage";
 import { GamePage } from "./pages/GamePage";
+import { ResultsPage } from "./pages/ResultsPage";
 
 // snowflakes made once, outside the component, so flakes don't jump on re-render
 const flakes = Array.from({ length: 100 }, () => ({
@@ -32,9 +33,18 @@ function App() {
           </span>
         ))}
       </div>
+      {/* "goo" filter: blur, then snap the edge back to sharp, so blocky masks become smooth blobs.
+          Used by .live-fit and .fit-map on the game and results pages. */}
+      <svg width="0" height="0" style={{ position: "absolute" }} aria-hidden="true">
+        <filter id="goo" colorInterpolationFilters="sRGB">
+          <feGaussianBlur stdDeviation="8" />
+          <feColorMatrix values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -9" />
+        </filter>
+      </svg>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/game" element={<GamePage />} />
+        <Route path="/results" element={<ResultsPage />} />
       </Routes>
     </>
   );
