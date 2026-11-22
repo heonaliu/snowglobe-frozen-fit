@@ -1,0 +1,194 @@
+@font-face {
+  font-family: 'Snow Kei';
+  src: url('../assets/SnowKei.ttf') format('truetype');
+  font-display: swap;
+}
+
+/* Full-viewport, no scrolling: everything is sized to fit the window */
+.home {
+  --navy: #1b2f6e;
+  --heading: #3a4a7a;
+  --body: #5a5f9a;
+  --cream: #fbf9f4;
+  --pink: #ff8fb8;
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: var(--cream);
+  color: var(--navy);
+  font-family: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+}
+
+/* ---------- Background layer (falling flakes + big snowflake) ---------- */
+.home-bg {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+.home .corner-snowflake {
+  position: absolute;
+  left: -6vmin;
+  bottom: -6vmin;
+  width: 42vmin;
+  height: 42vmin;
+  animation: hf-spin 40s linear infinite, hf-bob 6s ease-in-out infinite;
+  filter: drop-shadow(0 0 1px var(--navy)) drop-shadow(0 6px 14px rgba(27, 47, 110, .3));
+}
+@keyframes hf-spin { to { rotate: 360deg; } }
+@keyframes hf-bob { 50% { translate: 0 -10px; } }
+
+/* ---------- Layout: one screen, no scrolling ---------- */
+.home-content {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3.2dvh;
+  padding: 3.4dvh 2.5vw 3.8dvh;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/* ---------- Title picture slot ---------- */
+.home-title {
+  flex: 0 0 auto;
+  margin: 0;
+  height: clamp(56px, 16dvh, 180px);
+  max-width: 90vw;
+  display: flex;
+  justify-content: center;
+}
+.home-title-img { display: block; height: 100%; width: auto; max-width: 100%; object-fit: contain; }
+.home-title-placeholder {
+  display: grid;
+  place-items: center;
+  width: min(80vw, 520px);
+  height: 100%;
+  box-sizing: border-box;
+  border: 2px dashed var(--navy);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, .6);
+  font-size: max(.7rem, min(2.4dvh, 2.4vw));
+  font-weight: normal;
+  line-height: 1.3;
+  text-align: center;
+}
+
+.home-heading {
+  flex: 0 0 auto;
+  margin: 0;
+  font-weight: 400;
+  font-size: min(5.2dvh, 6.5vw);
+  line-height: 1.1;
+  color: var(--heading);
+  text-align: center;
+}
+
+/* ---------- Square cards (together ~50% of the screen width, centered) ---------- */
+.home-cards {
+  flex: 0 0 auto;
+  /* half the screen width (never too tiny), but capped by the height so the
+     square cards still fit on a short window without scrolling */
+  width: min(100%, max(50vw, 540px), 130dvh);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  gap: 1.3vw;
+  padding-bottom: 6px; /* room for the cards' bottom edge */
+}
+
+.home-card {
+  --tint: #e6e0f3;
+  aspect-ratio: 1 / 1;          /* square */
+  container-type: inline-size;  /* lets the text scale with the card (cqw) */
+  min-height: 0;
+  min-width: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.6dvh;
+  padding: 2dvh 1.1vw;
+  border: 2px solid var(--navy);
+  border-radius: 16px;
+  box-shadow: 0 6px 0 var(--navy);
+  text-align: center;
+  overflow: hidden;
+  /* soft diamond pattern over a pastel-to-cream fade */
+  background-color: var(--cream);
+  background-image:
+    linear-gradient(45deg, rgba(255,255,255,.35) 25%, transparent 25%, transparent 75%, rgba(255,255,255,.35) 75%),
+    linear-gradient(-45deg, rgba(255,255,255,.35) 25%, transparent 25%, transparent 75%, rgba(255,255,255,.35) 75%),
+    linear-gradient(180deg, var(--tint) 0%, var(--cream) 100%);
+  background-size: 28px 28px, 28px 28px, 100% 100%;
+}
+.home-card-lavender { --tint: #e4dcf2; }
+.home-card-butter   { --tint: #f6ecd0; }
+.home-card-sky      { --tint: #d9ecf7; }
+
+.home-card-title {
+  flex: 0 0 auto;
+  margin: 0;
+  font-weight: 400;
+  font-size: max(.9rem, 9cqw);
+  line-height: 1.1;
+  color: var(--navy);
+}
+
+/* the art takes the leftover space and the picture shrinks to fit it */
+.home-card-art {
+  flex: 1 1 0;       /* take the height that's left */
+  min-height: 0;
+  width: min(100%, max(50vw, 540px));   /* half the screen width (never too tiny) */
+  display: grid;
+  place-items: center;
+}
+.home-card-img { width: 100%; height: 100%; object-fit: contain; }
+.home-card-placeholder {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  display: grid;
+  place-items: center;
+  border: 2px dashed var(--navy);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, .5);
+  font-size: max(.65rem, 5cqw);
+  line-height: 1.3;
+}
+
+.home-card-text {
+  flex: 0 0 auto;
+  margin: 0;
+  font-size: max(.65rem, 5.6cqw);
+  line-height: 1.3;
+  color: var(--body);
+}
+
+/* ---------- Start button (same look as the game's Start!) ---------- */
+.home-btn {
+  flex: 0 0 auto;
+  font-family: 'Snow Kei', 'Trebuchet MS', sans-serif;
+  font-size: max(1rem, min(4.4dvh, 5vw));
+  padding: .35em 1.5em;
+  border: 3px solid #1d4e89;
+  border-radius: 999px;
+  background: var(--pink);
+  color: #fff;
+  box-shadow: 0 6px 0 #1d4e89;
+  cursor: pointer;
+  transition: transform .1s, box-shadow .1s;
+}
+.home-btn:hover { transform: translateY(-2px); }
+.home-btn:active { transform: translateY(4px); box-shadow: 0 2px 0 #1d4e89; }
+.home-btn:focus-visible { outline: 3px solid var(--navy); outline-offset: 4px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .home .corner-snowflake { animation: none; }
+}

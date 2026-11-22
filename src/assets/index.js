@@ -18,3 +18,7 @@ const pick = (name) => {
 
 export const snowflakeImg = pick('snowflake')
 export const timerImg = pick('timer')
+
+// Home page art slots
+export const titleImg = pick('title')   // title picture at the top
+export const cardImgs = [pick('card1'), pick('card2'), pick('card3')]  // one per card
