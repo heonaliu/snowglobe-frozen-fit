@@ -7,7 +7,7 @@
   top: 0;
   inset: 0;
   z-index: 10;
-  overflow: hidden;   /* one screen, no scrolling: the cube pictures shrink to fit instead */
+  overflow: hidden;   /* one screen, no scrolling: the round photos shrink to fit instead */
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -36,7 +36,7 @@
 }
 
 .results-rounds {
-  flex: 1 1 0;        /* take all the height left between the score and the buttons */
+  flex: 1 1 0;        /* take all the height left between the form and the buttons */
   min-height: 0;
   width: min(100%, 1100px, 130dvh);  /* narrower on short windows, so the photos leave room for the cubes */
   display: grid;
@@ -47,6 +47,7 @@
 
 /* each round reuses the .game-score card, with the photo inside it */
 .results-card {
+  position: relative;   /* the cube sticker is placed against the card's corner */
   min-width: 0;
   min-height: 0;
   display: flex;
@@ -54,10 +55,28 @@
   align-items: center;
   gap: 1.2vmin;
 }
-.results-frame { width: 100%; box-shadow: none; flex: none; } /* photo keeps its size; only the cube shrinks */
-.results-img { width: 100%; max-width: none; max-height: none; }
+
+/* the space for the photo: whatever height the card has left after the title and score */
+.results-photo {
+  flex: 1 1 0;
+  min-height: 0;
+  width: 100%;
+  container-type: size;   /* lets the photo size itself to this box (cqw / cqh below) */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.results-frame { box-shadow: none; }
+/* as big as fits in .results-photo without changing its shape (2vmin = the frame's border) */
+.results-img {
+  width: auto;
+  height: auto;
+  max-width: calc(100cqw - 2vmin);
+  max-height: calc(100cqh - 2vmin);
+}
 
 .results-actions {
+  flex: none;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -109,10 +128,15 @@
   bottom: auto;
   transform: scaleY(-1);
 }
-/* score picture under each round's score: fills whatever space is left in the card */
+/* score picture: a small tilted sticker stuck on the card's top-right corner */
 .results-score-img {
-  flex: 1 1 0;
-  min-height: 0;
-  width: 100%;
-  object-fit: contain;
+  position: absolute;
+  top: -3vmin;
+  right: -3vmin;
+  z-index: 2;
+  width: clamp(48px, 9vmin, 100px);
+  height: auto;
+  transform: rotate(12deg);   /* separate from the pop animation's `rotate`, so the tilt stays */
+  filter: drop-shadow(0 3px 4px rgba(27, 47, 110, .35));
+  pointer-events: none;
 }

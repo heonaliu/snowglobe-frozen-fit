@@ -15,6 +15,16 @@ const board = collection(db, 'leaderboard')
 // best score first; on a tie the team that got there first ranks higher
 const byRank = (a, b) => b.score - a.score || a.createdAt - b.createdAt
 
+// Firestore quietly retries forever when it can't reach the database,
+// so give up after a while and show an error instead of "Saving…" forever
+const TIMEOUT_MS = 10_000
+const withTimeout = (promise) =>
+  Promise.race([
+    promise,
+    new Promise((_, reject) =>
+      setTimeout(() => reject(new Error('Timed out reaching Firestore.')), TIMEOUT_MS)),
+  ])
+
 // trim and collapse spaces / line breaks
 const clean = (value) =>
   typeof value === 'string' ? value.replace(/\s+/g, ' ').trim().slice(0, MAX_NAME) : ''
@@ -22,7 +32,7 @@ const clean = (value) =>
 // the top scores of all time, best first
 export async function fetchLeaderboard() {
   try {
-    const snap = await getDocs(query(board, orderBy('score', 'desc'), limit(TOP)))
+    const snap = await withTimeout(getDocs(query(board, orderBy('score', 'desc'), limit(TOP))))
     return snap.docs.map((d) => ({ id: d.id, ...d.data() })).sort(byRank)
   } catch (err) {
     console.error('leaderboard load failed:', err)
@@ -42,10 +52,11 @@ export async function submitScore({ team, members, score }) {
 
   try {
     const data = { team, members, score, createdAt: Date.now() }
-    const ref = await addDoc(board, data)
+    const ref = await withTimeout(addDoc(board, data))
     // this entry is the newest, so it ranks below every earlier tie:
     // rank = number of entries with a score >= ours (ours included)
-    const count = await getCountFromServer(query(board, where('score', '>=', score)))
+    const count = await withTimeout(
+      getCountFromServer(query(board, where('score', '>=', score))))
     return { entry: { id: ref.id, ...data }, rank: count.data().count }
   } catch (err) {
     console.error('leaderboard save failed:', err)

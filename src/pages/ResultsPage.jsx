@@ -36,12 +36,16 @@ export const ResultsPage = () => {
         {rounds.map((r, i) => (
           <article key={i} className="game-score results-card">
             <h3 className="game-score-title">round {i + 1}</h3>
-            <div className="game-result-frame results-frame">
-              <img src={r.photo} alt={`Your pose in round ${i + 1}`} className="game-result-img results-img" />
-              <OutlineOverlay outline={r.outline} />
-              <img src={r.fitMap} alt="" className="fit-map" />
+            {/* the photo shrinks to fit the space left in the card; the frame hugs it so the overlays line up */}
+            <div className="results-photo">
+              <div className="game-result-frame results-frame">
+                <img src={r.photo} alt={`Your pose in round ${i + 1}`} className="game-result-img results-img" />
+                <OutlineOverlay outline={r.outline} />
+                <img src={r.fitMap} alt="" className="fit-map" />
+              </div>
             </div>
             <p className="game-score-number">{r.score} / 10</p>
+            {/* cube picture, stuck on the card's top corner like a sticker */}
             {scoreImg(r.score) && (
               <img src={scoreImg(r.score)} alt="" className="results-score-img" draggable="false" />
             )}
