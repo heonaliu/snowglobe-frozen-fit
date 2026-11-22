@@ -1,4 +1,4 @@
-<img width="546" height="260" alt="heading2_freezefit" src="https://github.com/user-attachments/assets/fb9fb174-d3f8-4f3c-b520-fde79896ee63" />
+![title-image-readme](image.png)
 
 ---
 
