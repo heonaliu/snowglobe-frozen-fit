@@ -33,8 +33,6 @@ export const ResultsPage = () => {
         <h1 className="results-title">results</h1>
         <p className="results-total">{total} / {rounds.length * 10}</p>
       </header>
-      <SubmitScore score={total} />
-
       <section className="results-rounds">
         {rounds.map((r, i) => (
           <article key={i} className="game-score results-card">
@@ -55,6 +53,9 @@ export const ResultsPage = () => {
           </article>
         ))}
       </section>
+
+      <SubmitScore score={total} />
+
       {/* easter egg: any round that scored 7 right after a 6. Waits for the cubes to pop first */}
       {rounds.some((r, i) => isSixSeven(rounds[i - 1]?.score, r.score)) && <SixSeven delay={0.9} />}
 

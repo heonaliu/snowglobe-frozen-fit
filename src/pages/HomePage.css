@@ -210,7 +210,7 @@
   height: calc(100vw / var(--tiles) * 189 / 882);
   z-index: -1;    
   pointer-events: none;
-  background-image: url('../public/border.png');
+  background-image: url('/border.png');
   background-repeat: repeat-x;
   background-position: bottom left;
   background-size: calc(100% / var(--tiles)) 100%;

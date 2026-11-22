@@ -12,7 +12,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.8dvh;
+  justify-content: center;   /* any height the cards don't use goes above and below, not inside them */
+  gap: 3.2dvh;               /* breathing room between title, cards, form and buttons */
   padding: 3.5dvh 16px 3dvh;
   /* no background of its own, so the app-wide falling snow (App.jsx) shows through */
   color: var(--navy);
@@ -25,10 +26,11 @@
 .results-head {
   flex: none;
   display: flex;
-  align-items: baseline;
+  align-items: center;   /* score sits level with the middle of the title, not its bottom edge */
   justify-content: center;
   flex-wrap: wrap;
   column-gap: .6em;
+  margin-bottom: 3vmin;  /* clears the cube stickers that poke 3vmin above the cards */
 }
 
 .results-title {
@@ -49,8 +51,9 @@
 .results-card .game-score-number { font-size: clamp(1.3rem, 4vmin, 2.4rem); }
 
 .results-rounds {
-  flex: 1 1 0;        /* take all the height left between the form and the buttons */
+  flex: 1 1 0;        /* take all the height left between the score and the form... */
   min-height: 0;
+  max-height: 38dvh;  /* ...but no taller than this, so the cards don't fill up with empty space */
   width: min(100%, 1100px, 130dvh);  /* narrower on short windows, so the photos leave room for the cubes */
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -131,7 +134,7 @@
   height: calc(100vw / var(--tiles) * 189 / 882);
   z-index: -1;    
   pointer-events: none;
-  background-image: url('../public/border.png');
+  background-image: url('/border.png');
   background-repeat: repeat-x;
   background-position: bottom left;
   background-size: calc(100% / var(--tiles)) 100%;
