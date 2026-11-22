@@ -200,7 +200,7 @@
   .home .corner-snowflake { animation: none; }
 }
 
-.home-content::after, .home-content::before {
+.home-bg::after, .home-bg::before {
   content: "";
   position: fixed;  
   left: 0;
@@ -216,7 +216,7 @@
   background-size: calc(100% / var(--tiles)) 100%;
 }
 
-.home-content::before {
+.home-bg::before {
   top: 0;
   bottom: auto;
   transform: scaleY(-1);
