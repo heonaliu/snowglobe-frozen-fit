@@ -5,6 +5,7 @@ export default function OutlineOverlay({ outline }) {
   return (
   <>
     <div className="outline-shade" style={{ "--fill": `url(${outline.fill})` }} />
+    <div className="outline-inside" style={{ "--fill": `url(${outline.fill})` }} />
     <img
       key={outline.id}
       className="outline-overlay"
