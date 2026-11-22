@@ -13,7 +13,7 @@
   align-items: center;
   gap: 3dvh;
   padding: 4dvh 16px;
-  background: var(--cream);
+  /* no background of its own, so the app-wide falling snow (App.jsx) shows through */
   color: var(--navy);
   font-family: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
   text-align: center;
