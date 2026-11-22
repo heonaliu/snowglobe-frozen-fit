@@ -16,17 +16,17 @@ const steps = [
   {
     title: '1. get ready',
     tint: 'lavender',
-    text: 'enable your camera and step back. get everyone in the frame!',
+    text: 'Allow your camera and step back so your whole body fits in the picture.',
   },
   {
     title: '2. fit the shape!',
     tint: 'butter',
-    text: 'a shape will appear on the screen. twist and squish yourselves to get everyone in, without spilling out OR leaving blank space!',
+    text: 'A shape appears while the timer counts down. Twist, squish and stretch to fill it without spilling outside!',
   },
   {
     title: '3. freeze!',
     tint: 'sky',
-    text: 'when the timer gets to 0, the camera will take a snapshot. the better you all fill the frame, the higher the score you\'ll get!',
+    text: 'When the timer hits zero we snap your picture. The better you fit, the more of the frozen penguin you thaw.',
   },
 ]
 
@@ -65,12 +65,14 @@ export const HomePage = () => {
             <img src={titleImg} alt="Frozen Fit" className="home-title-img" draggable="false" />
           ) : (
             <span className="home-title-placeholder">
-              title picture here<br />(src/assets/title.png)
+              your title picture goes here<br />(src/assets/title.png)
             </span>
           )}
         </h1>
 
-        <h2 className="home-heading">how does this work?</h2>
+        <button className="home-btn" onClick={handleStart}>Start</button>
+
+        <h2 className="home-heading">How does this work?</h2>
 
         <section className="home-cards">
           {steps.map((step, i) => (
@@ -90,7 +92,7 @@ export const HomePage = () => {
           ))}
         </section>
 
-        <button className="home-btn" onClick={handleStart}>Start</button>
+        
       </main>
     </div>
   )

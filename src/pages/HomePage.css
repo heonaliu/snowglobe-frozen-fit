@@ -48,8 +48,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.6dvh;
-  padding: 2.4dvh 2.5vw 2.6dvh;
+  justify-content: center;
+  gap: 3.2dvh;
+  padding: 3.4dvh 2.5vw 3.8dvh;
   max-width: 1280px;
   margin: 0 auto;
 }
@@ -58,7 +59,7 @@
 .home-title {
   flex: 0 0 auto;
   margin: 0;
-  height: clamp(56px, 18dvh, 190px);
+  height: clamp(56px, 16dvh, 180px);
   max-width: 90vw;
   display: flex;
   justify-content: center;
@@ -89,27 +90,31 @@
   text-align: center;
 }
 
-/* ---------- Cards (share whatever height is left) ---------- */
+/* ---------- Square cards (together ~50% of the screen width, centered) ---------- */
 .home-cards {
-  flex: 1 1 0;
-  min-height: 0;
-  width: 100%;
+  flex: 0 0 auto;
+  /* half the screen width (never too tiny), but capped by the height so the
+     square cards still fit on a short window without scrolling */
+  width: min(100%, max(50vw, 540px), 130dvh);
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  grid-auto-rows: minmax(0, 1fr);
-  gap: 2vw;
+  align-items: start;
+  gap: 1.3vw;
   padding-bottom: 6px; /* room for the cards' bottom edge */
 }
 
 .home-card {
   --tint: #e6e0f3;
+  aspect-ratio: 1 / 1;          /* square */
+  container-type: inline-size;  /* lets the text scale with the card (cqw) */
   min-height: 0;
+  min-width: 0;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.2dvh;
-  padding: 1.6dvh 1.4vw;
+  gap: 1.6dvh;
+  padding: 2dvh 1.1vw;
   border: 2px solid var(--navy);
   border-radius: 16px;
   box-shadow: 0 6px 0 var(--navy);
@@ -131,16 +136,16 @@
   flex: 0 0 auto;
   margin: 0;
   font-weight: 400;
-  font-size: max(.95rem, min(3.6dvh, 2.8vw));
+  font-size: max(.9rem, 9cqw);
   line-height: 1.1;
   color: var(--navy);
 }
 
 /* the art takes the leftover space and the picture shrinks to fit it */
 .home-card-art {
-  flex: 1 1 0;
+  flex: 1 1 0;       /* take the height that's left */
   min-height: 0;
-  width: 100%;
+  width: min(100%, max(50vw, 540px));   /* half the screen width (never too tiny) */
   display: grid;
   place-items: center;
 }
@@ -154,14 +159,14 @@
   border: 2px dashed var(--navy);
   border-radius: 12px;
   background: rgba(255, 255, 255, .5);
-  font-size: max(.7rem, min(2.2dvh, 1.6vw));
+  font-size: max(.65rem, 5cqw);
   line-height: 1.3;
 }
 
 .home-card-text {
   flex: 0 0 auto;
   margin: 0;
-  font-size: max(.7rem, min(2.5dvh, 1.8vw));
+  font-size: max(.65rem, 5.6cqw);
   line-height: 1.3;
   color: var(--body);
 }
@@ -170,7 +175,7 @@
 .home-btn {
   flex: 0 0 auto;
   font-family: 'Snow Kei', 'Trebuchet MS', sans-serif;
-  font-size: max(1rem, min(4.6dvh, 5vw));
+  font-size: max(1rem, min(4.4dvh, 5vw));
   padding: .35em 1.5em;
   border: 3px solid #1d4e89;
   border-radius: 999px;
