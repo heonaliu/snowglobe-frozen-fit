@@ -5,7 +5,7 @@ import { useFlurryNavigate } from "./Flurry";
 import "./SubmitScore.css";
 
 // "Save your score" form: a team name plus up to 7 team members.
-export default function SubmitScore({ score, maxScore }) {
+export default function SubmitScore({ score }) {
   const [team, setTeam] = useState("");
   const [members, setMembers] = useState(["", ""]);
   const [status, setStatus] = useState("idle");   // idle | saving | saved | skipped
@@ -76,11 +76,10 @@ export default function SubmitScore({ score, maxScore }) {
 
   return (
     <form className="results-form" onSubmit={handleSubmit}>
-      <h2 className="results-form-title">save your score</h2>
-      <p className="results-form-text">
-        {score} / {maxScore} — add your team to the leaderboard!
-      </p>
+      {/* the score itself is already shown right above the form */}
+      <h2 className="results-form-title">save your score to the leaderboard</h2>
 
+      {/* labels are visually hidden (screen readers still get them); placeholders say what goes where */}
       <label className="results-label" htmlFor="team-name">Team name</label>
       <input
         id="team-name"
@@ -88,7 +87,7 @@ export default function SubmitScore({ score, maxScore }) {
         value={team}
         onChange={(e) => setTeam(e.target.value)}
         maxLength={MAX_NAME}
-        placeholder="e.g. The Ice Cubes"
+        placeholder="Team name, e.g. The Ice Cubes"
         autoComplete="off"
         required
       />
@@ -118,13 +117,13 @@ export default function SubmitScore({ score, maxScore }) {
             )}
           </div>
         ))}
+        {/* sits in the next free spot of the members grid, so it doesn't need its own row */}
+        {members.length < MAX_MEMBERS && (
+          <button type="button" className="results-add" onClick={addMember}>
+            + member ({members.length}/{MAX_MEMBERS})
+          </button>
+        )}
       </div>
-
-      {members.length < MAX_MEMBERS && (
-        <button type="button" className="results-add" onClick={addMember}>
-          + add member ({members.length}/{MAX_MEMBERS})
-        </button>
-      )}
 
       {error && <p className="results-error" role="alert">{error}</p>}
 

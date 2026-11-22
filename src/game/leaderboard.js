@@ -10,7 +10,11 @@ export const MAX_NAME = 30
 const MAX_SCORE = 100
 const TOP = 50
 
-const board = collection(db, 'leaderboard')
+// looked up on use (not at import), so a missing Firebase config can't crash the site
+const board = () => {
+  if (!db) throw new Error('Firebase is not configured.')
+  return collection(db, 'leaderboard')
+}
 
 // best score first; on a tie the team that got there first ranks higher
 const byRank = (a, b) => b.score - a.score || a.createdAt - b.createdAt
@@ -32,7 +36,7 @@ const clean = (value) =>
 // the top scores of all time, best first
 export async function fetchLeaderboard() {
   try {
-    const snap = await withTimeout(getDocs(query(board, orderBy('score', 'desc'), limit(TOP))))
+    const snap = await withTimeout(getDocs(query(board(), orderBy('score', 'desc'), limit(TOP))))
     return snap.docs.map((d) => ({ id: d.id, ...d.data() })).sort(byRank)
   } catch (err) {
     console.error('leaderboard load failed:', err)
@@ -52,11 +56,11 @@ export async function submitScore({ team, members, score }) {
 
   try {
     const data = { team, members, score, createdAt: Date.now() }
-    const ref = await withTimeout(addDoc(board, data))
+    const ref = await withTimeout(addDoc(board(), data))
     // this entry is the newest, so it ranks below every earlier tie:
     // rank = number of entries with a score >= ours (ours included)
     const count = await withTimeout(
-      getCountFromServer(query(board, where('score', '>=', score))))
+      getCountFromServer(query(board(), where('score', '>=', score))))
     return { entry: { id: ref.id, ...data }, rank: count.data().count }
   } catch (err) {
     console.error('leaderboard save failed:', err)

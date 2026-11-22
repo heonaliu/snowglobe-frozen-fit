@@ -12,8 +12,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3dvh;
-  padding: 4dvh 16px;
+  gap: 1.8dvh;
+  padding: 3.5dvh 16px 3dvh;
   /* no background of its own, so the app-wide falling snow (App.jsx) shows through */
   color: var(--navy);
   font-family: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
@@ -22,18 +22,31 @@
   margin-bottom: 20px;
 }
 
+.results-head {
+  flex: none;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  flex-wrap: wrap;
+  column-gap: .6em;
+}
+
 .results-title {
   margin: 0;
   font-family: 'Snow Kei', 'Trebuchet MS', sans-serif;
   font-weight: 400;
-  font-size: clamp(2.2rem, 8vmin, 4.5rem);
+  font-size: clamp(2rem, 6.5vmin, 4rem);
   line-height: 1;
 }
 
 .results-total {
   margin: 0;
-  font-size: clamp(1.6rem, 5vmin, 3rem);
+  font-size: clamp(1.5rem, 4.5vmin, 2.6rem);
 }
+
+/* round cards: smaller title and score than on the game page, so the photo gets the room */
+.results-card .game-score-title { font-size: clamp(1rem, 2.6vmin, 1.5rem); }
+.results-card .game-score-number { font-size: clamp(1.3rem, 4vmin, 2.4rem); }
 
 .results-rounds {
   flex: 1 1 0;        /* take all the height left between the form and the buttons */
@@ -105,6 +118,8 @@
 .results-btn:active { transform: translateY(4px); box-shadow: 0 2px 0 #1d4e89; }
 .results-btn:focus-visible { outline: 3px solid var(--navy); outline-offset: 4px; }
 .results-btn-quiet { background: #fff; color: #1d4e89; }
+/* bottom buttons a bit smaller, so all three fit on one row */
+.results-actions .results-btn { font-size: clamp(1rem, 3vmin, 1.5rem); }
 
 .results::after, .results::before {
   content: "";

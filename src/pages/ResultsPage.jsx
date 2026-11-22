@@ -28,9 +28,12 @@ export const ResultsPage = () => {
   return (
     <main className="results-page">
     <div className="results">
-      <h1 className="results-title">results</h1>
-      <p className="results-total">{total} / {rounds.length * 10}</p>
-      <SubmitScore score={total} maxScore={rounds.length * 10} />
+      {/* title and total share one line to leave height for the round photos */}
+      <header className="results-head">
+        <h1 className="results-title">results</h1>
+        <p className="results-total">{total} / {rounds.length * 10}</p>
+      </header>
+      <SubmitScore score={total} />
 
       <section className="results-rounds">
         {rounds.map((r, i) => (

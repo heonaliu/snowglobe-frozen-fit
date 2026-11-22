@@ -26,14 +26,26 @@
   gap: 10px;
   margin-top: 4px;
 }
-.results-form .results-btn { font-size: clamp(1rem, 2.6vmin, 1.3rem); box-shadow: 0 4px 0 #1d4e89; }
+.results-form .results-btn {
+  font-size: clamp(.95rem, 2.3vmin, 1.2rem);
+  padding: .35em .9em;
+  box-shadow: 0 4px 0 #1d4e89;
+}
 .results-form .results-btn:active { box-shadow: 0 1px 0 #1d4e89; }
 .results-form .results-btn:disabled { opacity: .6; cursor: wait; }
 
 /* after "No thanks": just one short line plus the buttons */
 .results-form-skipped { padding: 10px 16px 12px; }
 
-.results-label { font-size: .9rem; color: #3a4a7a; }
+/* visually hidden, still read by screen readers */
+.results-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
 .results-input {
   flex: 1;
   min-width: 0;
@@ -48,11 +60,11 @@
 }
 .results-input:focus-visible { outline: 3px solid #bfe6ff; outline-offset: 1px; }
 
-/* members in two columns, so 7 names take 4 rows instead of 7 */
-.results-members { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+/* members (and the "+ member" button) in three columns, so 2 names + the button fit on one row */
+.results-members { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
 .results-member { display: flex; gap: 6px; align-items: center; }
-@media (max-width: 420px) {
-  .results-members { grid-template-columns: minmax(0, 1fr); }
+@media (max-width: 480px) {
+  .results-members { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 .results-remove {
@@ -71,7 +83,9 @@
 .results-remove:hover { background: #f6ecd0; }
 
 .results-add {
-  align-self: flex-start;
+  justify-self: start;
+  align-self: center;
+  white-space: nowrap;
   padding: 3px 12px;
   border: 2px dashed var(--navy);
   border-radius: 999px;
