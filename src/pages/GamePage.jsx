@@ -4,10 +4,13 @@ import CameraFeed from "../components/CameraFeed";
 import OutlineOverlay from "../components/OutlineOverlay";
 import Status from "../components/Status";
 import Snowflake from "../components/Snowflake";
-import { pickRandomOutline } from "../game/outlines";
+import { pickRandomOutline, getOutlineMask } from "../game/outlines";
 import "./GamePage.css";
+import { loadSegmenter, getPersonMask } from "../hooks/useBodySegmentation"
+import { checkFit } from "../game/checkFit";
 
-const ROUND_SECONDS = 10;
+const ROUND_SECONDS = 7;
+
 
 export const GamePage = () => {
   const videoRef = useRef(null);
@@ -17,7 +20,17 @@ export const GamePage = () => {
   const [outline, setOutline] = useState(null);
   const [snapshot, setSnapshot] = useState(null);
 
+  useEffect(() => { loadSegmenter() }, [])
+
   const takeSnapshot = useCallback(() => {
+    Promise.all([
+      getPersonMask(canvas),
+      getOutlineMask(outline.fill, canvas.width, canvas.height),
+    ]).then(([personMask, outlineMask]) => {
+    const result = checkFit(personMask, outlineMask)
+    console.log("score:", result.score, "fit:", result.fit.toFixed(2), result)
+    })
+
     const video = videoRef.current;
     if (!video || !video.videoWidth) return;
     const canvas = document.createElement("canvas");
@@ -28,8 +41,17 @@ export const GamePage = () => {
     ctx.translate(canvas.width, 0);
     ctx.scale(-1, 1);
     ctx.drawImage(video, 0, 0);
+    getPersonMask(canvas).then((mask) => {
+      const count = mask.reduce((a, b) => a + b, 0)
+      console.log("person pixels:", count, "of", mask.length)
+    })
+    getOutlineMask(outline.fill, canvas.width, canvas.height).then((mask) => {
+      const count = mask.reduce((a, b) => a + b, 0)
+      console.log("outline pixels:", count, "of", mask.length)
+    })
+
     setSnapshot(canvas.toDataURL("image/png"));
-  }, []);
+  }, [outline]);
 
   const startRound = useCallback(() => {
     setSnapshot(null);

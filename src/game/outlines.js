@@ -9,9 +9,33 @@ export const outlines = [
   { id: "7",     name: "Pattern 7",     src: "/outlines/pattern7.png", fill: "/fills/fillpattern7.png" },
 ];
 
+//picks a random outline for you
 export function pickRandomOutline(previous) {
   const options = outlines.filter((o) => o.id !== previous?.id);
   return options[Math.floor(Math.random() * options.length)];
 }
 
-//picks a random outline for you
+// returns one value per pixel: 1 = inside the outline, 0 = outside
+// placed the same way the frame shows it: a centred square (object-fit: contain)
+export async function getOutlineMask(fillSrc, W, H) {
+  const img = new Image()
+  img.src = fillSrc
+  await img.decode()                       // wait for the PNG to load
+
+  const canvas = document.createElement("canvas")
+  canvas.width = W
+  canvas.height = H
+  const ctx = canvas.getContext("2d")
+  const s = Math.min(W, H)
+  ctx.drawImage(img, (W - s) / 2, (H - s) / 2, s, s)   // ← your two lines
+
+  const rgba = ctx.getImageData(0, 0, W, H).data       // 4 numbers per pixel: r, g, b, a
+  const mask = new Uint8Array(W * H)
+  for (let i = 0; i < mask.length; i++) {
+    mask[i] = rgba[i * 4 + 3] > 128 ? 1 : 0            // alpha > half = inside
+  }
+  return mask
+}
+
+
+

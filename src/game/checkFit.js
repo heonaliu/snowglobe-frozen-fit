@@ -26,3 +26,20 @@
  *     colorMap   // per-pixel colors for drawing: 0 none, 1 green, 2 red, 3 gap
  *   }
  * **/
+
+export function checkFit(personMask, outlineMask) {
+  let inside = 0, outside = 0, gaps = 0
+  const colorMap = new Uint8Array(personMask.length)
+
+  for (let i = 0; i < personMask.length; i++) {
+    const person = personMask[i]
+    const shape = outlineMask[i]
+    if (person && shape)  { inside++;  colorMap[i] = 1 }   // green
+    else if (person)      { outside++; colorMap[i] = 2 }   // red
+    else if (shape)       { gaps++;    colorMap[i] = 3 }   // gap
+  }
+
+  const fit = inside / (inside + outside + gaps || 1)      // || 1 avoids dividing by 0
+  const score = Math.round(1 + fit * 9)                    // 0–1 → 1–10
+  return { score, fit, inside, outside, gaps, colorMap }
+}
