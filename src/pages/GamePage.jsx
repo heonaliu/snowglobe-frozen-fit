@@ -119,9 +119,10 @@ export const GamePage = () => {
             <OutlineOverlay outline={outline} />
             {fitMap && <img src={fitMap} alt="" className="fit-map" />}
           </div>
-          <p className="game-score">
-            {score === null ? "Scoring…" : `Score: ${score} / 10`}
-          </p>
+          <div className="game-score">
+            <h3 className="game-score-title">your score</h3>
+            <p className="game-score-number">{score === null ? "…" : `${score} / 10`}</p>
+          </div>
         </div>
       )}
     </div>

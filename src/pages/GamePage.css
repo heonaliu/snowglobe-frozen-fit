@@ -140,11 +140,38 @@
   mask: var(--fill) center / contain no-repeat;
 }
 
+/* score card: same look as the home page "how does this work?" cards (sky tint) */
 .game-score {
+  --navy: #1b2f6e;
+  --cream: #fbf9f4;
+  --tint: #d9ecf7;
+  min-width: min(80vw, 22rem);
+  box-sizing: border-box;
+  padding: 1.6vmin 3vmin 2vmin;
+  border: 2px solid var(--navy);
+  border-radius: 16px;
+  box-shadow: 0 6px 0 var(--navy);
+  text-align: center;
+  color: var(--navy);
+  font-family: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+  /* soft diamond pattern over a pastel-to-cream fade */
+  background-color: var(--cream);
+  background-image:
+    linear-gradient(45deg, rgba(255,255,255,.35) 25%, transparent 25%, transparent 75%, rgba(255,255,255,.35) 75%),
+    linear-gradient(-45deg, rgba(255,255,255,.35) 25%, transparent 25%, transparent 75%, rgba(255,255,255,.35) 75%),
+    linear-gradient(180deg, var(--tint) 0%, var(--cream) 100%);
+  background-size: 28px 28px, 28px 28px, 100% 100%;
+}
+.game-score-title {
   margin: 0;
-  font-size: clamp(1.6rem, 6vmin, 3.6rem);
-  color: #fff;
-  text-shadow: 0 .5vmin 0 var(--deep);
+  font-weight: 400;
+  font-size: clamp(1.1rem, 3.2vmin, 1.8rem);
+  line-height: 1.1;
+}
+.game-score-number {
+  margin: .3vmin 0 0;
+  font-size: clamp(2rem, 7vmin, 4rem);
+  line-height: 1;
 }
 
 /* green/red fit map, same pixel size as the snapshot so it lines up exactly */
