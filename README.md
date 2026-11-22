@@ -1,3 +1,8 @@
+# Project Description
+
+**live demo:** https://snowglobe-frozen-fit.vercel.app/
+**built by:** @varvarakarenski (Varvara Karenski), @heonaliu (Heona Liu), @shelxty (Shelley Ma)
+
 ![title-image-readme](image.png)
 
 ---
@@ -14,7 +19,6 @@ Team up to make a group of 2-5 people (or play solo!), and follow the prompts on
 2. Work together into a pose to fill up the area into a shape
 3. Get a scores based on how you all froze! The higher the better!
 
-
 # Technical Overview
 
 Frozen Fit runs entirely in the browser, with the camera/body/scoring all client-side. The leaderboard, however, is stored in a Firebase database. 
@@ -27,9 +31,17 @@ Frozen Fit runs entirely in the browser, with the camera/body/scoring all client
 - Styling is done with plain CSS.
 - The camera is opened with `getuserMedia` API (it just needs `https` or `localhost`).
 
-All of the (absolutely incredible) art is made by Heona!
+## run it yourself
 
-## Teamwork
-- Varvara worked on the body detection mechanism with computer vision
-- Heona worked on all the assets and hooking the leaderboard with firebase firestore
-- Shelley worked on the landing page layout and leaderboard
+1. Clone the repo: `git clone https://github.com/heonaliu/snowglobe-frozen-fit.git && cd snowglobe-frozen-fit`
+2. Install dependencies: `npm install`
+3. Copy `.env.example` to `.env` (`cp .env.example .env`) and fill in the six `VITE_FIREBASE_*` values: `API_KEY`, `AUTH_DOMAIN`, `PROJECT_ID`, `STORAGE_BUCKET`, `MESSAGING_SENDER_ID`, `APP_ID`. They're in the Firebase console under Project settings → General → Your apps → SDK setup and configuration. If you're really nice to us, we'll give you access to the Firebase.
+4. Start it: `npm run dev`, then open the address it prints (usually http://localhost:5173) and allow camera access
+
+## what was hard, and how we fixed it
+
+**Scoring a pose fairly.** "How well do you fit the shape" is fuzzy, so we made it a pixel count. MediaPipe gives us a mask of where people are, and the shape is another mask the same size. Every pixel is either inside the shape (good), outside it (spilled over), or a part of the shape nobody filled (a gap). The fit is `inside / (inside + outside + gaps)` (Intersection over Union), so you can't win by just standing in front of the whole shape.
+
+**Blocky body masks.** The raw mask is jagged and pixelated, and the green/red fit map looked like a broken TV. We run it through an SVG "goo" filter (blur, then sharpen the edge back up), which turns the blocks into smooth blobs.
+
+All of the (absolutely incredible) art is made by Heona! 
