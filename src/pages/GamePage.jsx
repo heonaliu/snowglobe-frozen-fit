@@ -11,6 +11,7 @@ import "./GamePage.css";
 import { loadSegmenter, getPersonMask } from "../hooks/useBodySegmentation"
 import { checkFit, colorMapToImage } from "../game/checkFit";
 import { scoreImg } from "../assets";
+import SixSeven, { isSixSeven } from "../components/SixSeven";
 
 const ROUND_SECONDS = 7;
 const TOTAL_ROUNDS = 3;
@@ -133,6 +134,8 @@ export const GamePage = () => {
               <img src={scoreImg(score)} alt="" className="game-score-img" draggable="false" />
             )}
           </div>
+          {/* easter egg: a 7 right after a 6 (results already holds this round, so the one before is at(-2)) */}
+          {score !== null && isSixSeven(results.at(-2)?.score, score) && <SixSeven delay={0.4} />}
         </div>
       )}
     </div>
