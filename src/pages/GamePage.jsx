@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useFlurryNavigate } from "../components/Flurry";
 import CameraFeed from "../components/CameraFeed";
 import OutlineOverlay from "../components/OutlineOverlay";
 import LiveFit from "../components/LiveFit";
@@ -25,7 +26,7 @@ export const GamePage = () => {
   const [fitMap, setFitMap] = useState(null);
   const [round, setRound] = useState(0);          // 1, 2, 3 once playing
   const [results, setResults] = useState([]);     // one entry per finished round
-  const navigate = useNavigate();
+  const navigate = useFlurryNavigate();
 
   useEffect(() => { loadSegmenter() }, [])
 
@@ -107,7 +108,7 @@ export const GamePage = () => {
       <Snowflake />
       <Status seconds={seconds} active={running} />
 
-      <Link to="/" className="game-back">← Home</Link>
+      <Link to="/" className="game-back" onClick={(e) => { e.preventDefault(); navigate("/"); }}>← Home</Link>
 
       {!cameraReady && <p className="game-hint">Opening camera…</p>}
 

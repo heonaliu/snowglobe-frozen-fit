@@ -5,7 +5,7 @@ function PlaceholderSnowflake() {
   return (
     <svg viewBox="-100 -100 200 200" className="corner-snowflake-art" aria-hidden="true">
       <g stroke="#fff" strokeWidth="7" strokeLinecap="round" fill="none">
-        {[0, 60, 120].map((a) => (
+        {[0, 45, 90, 135].map((a) => (   
           <g key={a} transform={`rotate(${a})`}>
             <line x1="-90" y1="0" x2="90" y2="0" />
             {[-1, 1].map((s) => (

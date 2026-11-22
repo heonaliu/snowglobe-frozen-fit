@@ -50,7 +50,7 @@
   align-items: center;
   justify-content: center;
   gap: 3.2dvh;
-  padding: 3.4dvh 2.5vw 3.8dvh;
+  padding: 3.6dvh 2.5vw; /* equal top/bottom, so centering leaves the same space above the title and below the cards */
   max-width: 1280px;
   margin: 0 auto;
 }
@@ -59,8 +59,8 @@
 .home-title {
   flex: 0 0 auto;
   margin: 0;
-  height: clamp(56px, 16dvh, 180px);
-  max-width: 90vw;
+  height: clamp(96px, 27dvh, 312px); /* image is cropped to the drawing, so this is the visible size */
+  max-width: 95vw;
   display: flex;
   justify-content: center;
 }
@@ -196,4 +196,26 @@
 
 @media (prefers-reduced-motion: reduce) {
   .home .corner-snowflake { animation: none; }
+}
+
+.home-content::after, .home-content::before {
+  content: "";
+  position: fixed;  
+  left: 0;
+  right: 0;
+  bottom: 0;      
+  --tiles: 15;       
+  height: calc(100vw / var(--tiles) * 189 / 882);
+  z-index: -1;    
+  pointer-events: none;
+  background-image: url('../public/border.png');
+  background-repeat: repeat-x;
+  background-position: bottom left;
+  background-size: calc(100% / var(--tiles)) 100%;
+}
+
+.home-content::before {
+  top: 0;
+  bottom: auto;
+  transform: scaleY(-1);
 }

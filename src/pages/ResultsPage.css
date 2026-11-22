@@ -4,9 +4,10 @@
   --cream: #fbf9f4;
   --pink: #ff8fb8;
   position: fixed;
+  top: 0;
   inset: 0;
   z-index: 10;
-  overflow-y: auto;
+  overflow: hidden;   /* one screen, no scrolling: the cube pictures shrink to fit instead */
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -17,6 +18,8 @@
   color: var(--navy);
   font-family: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
   text-align: center;
+  margin-top: 10px;
+  margin-bottom: 20px;
 }
 
 .results-title {
@@ -33,21 +36,25 @@
 }
 
 .results-rounds {
-  width: min(100%, 1100px);
+  flex: 1 1 0;        /* take all the height left between the score and the buttons */
+  min-height: 0;
+  width: min(100%, 1100px, 130dvh);  /* narrower on short windows, so the photos leave room for the cubes */
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: minmax(0, 1fr);
   gap: 2vw;
 }
 
 /* each round reuses the .game-score card, with the photo inside it */
 .results-card {
   min-width: 0;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1.2vmin;
 }
-.results-frame { width: 100%; box-shadow: none; }
+.results-frame { width: 100%; box-shadow: none; flex: none; } /* photo keeps its size; only the cube shrinks */
 .results-img { width: 100%; max-width: none; max-height: none; }
 
 .results-actions {
@@ -75,3 +82,33 @@
 .results-btn:active { transform: translateY(4px); box-shadow: 0 2px 0 #1d4e89; }
 .results-btn:focus-visible { outline: 3px solid var(--navy); outline-offset: 4px; }
 .results-btn-quiet { background: #fff; color: #1d4e89; }
+
+.results::after, .results::before {
+  content: "";
+  position: fixed;  
+  left: 0;
+  right: 0;
+  bottom: 0;      
+  --tiles: 15;       
+  height: calc(100vw / var(--tiles) * 189 / 882);
+  z-index: -1;    
+  pointer-events: none;
+  background-image: url('../public/border.png');
+  background-repeat: repeat-x;
+  background-position: bottom left;
+  background-size: calc(100% / var(--tiles)) 100%;
+}
+
+/* top copy: pinned to the top edge and flipped so it mirrors the bottom one */
+.results::before {
+  top: 0;
+  bottom: auto;
+  transform: scaleY(-1);
+}
+/* score picture under each round's score: fills whatever space is left in the card */
+.results-score-img {
+  flex: 1 1 0;
+  min-height: 0;
+  width: 100%;
+  object-fit: contain;
+}
