@@ -2,6 +2,9 @@
 
 **live demo:** https://snowglobe-frozen-fit.vercel.app/
 **built by:** @varvarakarenski (Varvara Karenski), @heonaliu (Heona Liu), @shelxty (Shelley Ma)
+- Varvara worked on the body detection mechanism with computer vision
+- Heona worked on all the assets and hooking the leaderboard with firebase firestore
+- Shelley worked on the landing page layout and leaderboard
 
 ![title-image-readme](image.png)
 
