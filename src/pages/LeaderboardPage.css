@@ -96,3 +96,8 @@
 .board-btn:active { transform: translateY(4px); box-shadow: 0 2px 0 #1d4e89; }
 .board-btn:focus-visible { outline: 3px solid var(--navy); outline-offset: 4px; }
 .board-btn-quiet { background: #fff; color: #1d4e89; }
+/* Background picture goes on the page itself (not on .board), so the falling
+   snow layer that sits behind .board stays visible on top of it */
+:root:has(.board) {
+  background: #fbf9f4 url('../assets/background.png') center / cover no-repeat fixed;
+}

@@ -14,7 +14,7 @@
   position: fixed;
   inset: 0;
   overflow: hidden;
-  background: var(--cream);
+  background: var(--cream) url('../assets/background.png') center / cover no-repeat;
   color: var(--navy);
   font-family: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
 }
