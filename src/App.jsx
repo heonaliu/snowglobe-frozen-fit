@@ -1,5 +1,7 @@
-import { useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { burstOnAllButtons } from "./components/burst";
+import { Routes, Route, useNavigate } from "react-router-dom";
+import Flurry, { FlurryContext } from "./components/Flurry"
 import "./App.css";
 import { HomePage } from "./pages/HomePage";
 import { GamePage } from "./pages/GamePage";
@@ -14,6 +16,23 @@ const flakes = Array.from({ length: 100 }, () => ({
 }));
 
 function App() {
+  const navigate = useNavigate();
+  const [flurry, setFlurry] = useState(false);
+  const busy = useRef(false);
+
+  useEffect(burstOnAllButtons, []);   // snowflakes jump from every button/link click
+
+  // useCallback keeps it the same function between renders, so the game page's
+  // effect (which lists it as a dependency) doesn't re-run when the flurry starts
+  const flurryTo = useCallback((path, options) => {
+    if (busy.current) return;                           // ignore double-clicks
+    busy.current = true;
+    const wait = 350;                                   // let the click burst pop first, then the flurry starts
+    setTimeout(() => setFlurry(true), wait);
+    setTimeout(() => navigate(path, options), wait + 700);  // swap while the veil is fully up (40–60% of 1.6s)
+    setTimeout(() => { setFlurry(false); busy.current = false; }, wait + 1600); // remove when the animation ends
+  }, [navigate]);
+
   return (
     <>
       {/* snowflake code lives outside <Routes>, so it shows on every page and doesn't restart on navigation */}
@@ -41,11 +60,14 @@ function App() {
           <feColorMatrix values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -9" />
         </filter>
       </svg>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/game" element={<GamePage />} />
-        <Route path="/results" element={<ResultsPage />} />
-      </Routes>
+      {flurry && <Flurry />}
+      <FlurryContext value={flurryTo}>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/game" element={<GamePage />} />
+          <Route path="/results" element={<ResultsPage />} />
+        </Routes>
+      </FlurryContext>
     </>
   );
 }

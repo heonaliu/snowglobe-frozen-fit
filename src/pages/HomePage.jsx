@@ -1,5 +1,5 @@
-import { useNavigate } from 'react-router-dom'
 import Snowflake from '../components/Snowflake'
+import { useFlurryNavigate } from '../components/Flurry'
 import { titleImg, cardImgs } from '../assets'
 import './HomePage.css'
 
@@ -31,12 +31,7 @@ const steps = [
 ]
 
 export const HomePage = () => {
-  const navigate = useNavigate();
-
-  const handleStart = () => {
-    navigate('/game');
-  };
-
+  const go = useFlurryNavigate();
   return (
     <div className="home">
       {/* background layer: stays put while the page scrolls */}
@@ -70,7 +65,7 @@ export const HomePage = () => {
           )}
         </h1>
 
-        <button className="home-btn" onClick={handleStart}>Start</button>
+        <button className="home-btn" onClick={() => go('/game')}>Start</button>
 
         <h2 className="home-heading">how do you play?</h2>
 

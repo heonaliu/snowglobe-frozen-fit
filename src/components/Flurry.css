@@ -1,0 +1,33 @@
+.flurry {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    pointer-events: none;
+    overflow: hidden;
+    animation: flurry-veil 1.6s ease-in-out forwards;
+}
+
+@keyframes flurry-veil {
+    0%   { background: rgba(251, 249, 244, 0); }
+    40%, 60% { background: rgba(251, 249, 244, 1); }
+    100% { background: rgba(251, 249, 244, 0); }
+}
+
+.flurry-flake {
+  position: absolute;
+  color: #fff;
+  text-shadow: 0 0 2px #1b2f6e;
+  animation: flurry-fly 1.4s ease-in-out both;
+}
+
+/* each flake drifts a short way from its own spot, fading in and out,
+   so the whole screen is full of snow instead of one band sweeping across */
+@keyframes flurry-fly {
+  from { transform: translate(0, -5vh) rotate(0deg); opacity: 0; }
+  25%, 75% { opacity: 1; }
+  to   { transform: translate(35vw, 15vh) rotate(var(--spin)); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flurry-flake { display: none; }   /* just the fade */
+}

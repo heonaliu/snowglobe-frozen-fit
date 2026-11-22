@@ -197,3 +197,25 @@
 @media (prefers-reduced-motion: reduce) {
   .home .corner-snowflake { animation: none; }
 }
+
+.home-content::after, .home-content::before {
+  content: "";
+  position: fixed;  
+  left: 0;
+  right: 0;
+  bottom: 0;      
+  --tiles: 15;       
+  height: calc(100vw / var(--tiles) * 189 / 882);
+  z-index: -1;    
+  pointer-events: none;
+  background-image: url('../public/border.png');
+  background-repeat: repeat-x;
+  background-position: bottom left;
+  background-size: calc(100% / var(--tiles)) 100%;
+}
+
+.home-content::before {
+  top: 0;
+  bottom: auto;
+  transform: scaleY(-1);
+}

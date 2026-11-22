@@ -1,0 +1,18 @@
+.burst-flake {
+  position: fixed;
+  z-index: 101;             
+  pointer-events: none;
+  color: #fff;
+  text-shadow: 0 0 2px #1b2f6e;
+  translate: -50% -50%;     
+  animation: burst-jump .9s cubic-bezier(.2, .7, .4, 1) forwards;
+}
+
+@keyframes burst-jump {
+  0%   { transform: translate(0, 0) scale(.4) rotate(0); opacity: 1; }
+  45%  { transform: translate(var(--dx), var(--dy)) scale(1) rotate(calc(var(--spin) / 2)); opacity: 1; }
+  100% { transform: translate(calc(var(--dx) * 1.2), calc(var(--dy) + 60px)) scale(.8) rotate(var(--spin)); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .burst-flake { display: none; }
+}
