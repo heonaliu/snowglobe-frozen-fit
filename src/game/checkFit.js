@@ -40,7 +40,7 @@ export function checkFit(personMask, outlineMask) {
   }
 
   const fit = inside / (inside + outside + gaps || 1)      // || 1 avoids dividing by 0
-  const BONUS = 1                                          // the game is hard: everyone gets +1, still capped at 10
+  const BONUS = 2                                          // the game is hard: everyone gets +1, still capped at 10
   const score = Math.min(10, Math.round(1 + fit * 9) + BONUS)  // 0–1 → 1–10, then the bonus → 2–10
   return { score, fit, inside, outside, gaps, colorMap }
 }
